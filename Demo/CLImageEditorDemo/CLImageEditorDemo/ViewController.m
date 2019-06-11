@@ -83,12 +83,35 @@
         CLImageToolInfo *tool = [editor.toolInfo subToolInfoWithToolName:@"CLToneCurveTool" recursive:NO];
         tool.available = NO;
         
-        tool = [editor.toolInfo subToolInfoWithToolName:@"CLRotateTool" recursive:YES];
-        tool.available = NO;
+        CLImageToolInfo *tool1 = [editor.toolInfo subToolInfoWithToolName:@"CLRotateTool" recursive:YES];
+        tool1.available = NO;
         
-        tool = [editor.toolInfo subToolInfoWithToolName:@"CLHueEffect" recursive:YES];
-        tool.available = NO;
-        */
+        CLImageToolInfo *tool2 = [editor.toolInfo subToolInfoWithToolName:@"CLHueEffect" recursive:YES];
+        tool2.available = NO;
+        
+        CLImageToolInfo *tool3 = [editor.toolInfo subToolInfoWithToolName:@"CLBlurTool" recursive:YES];
+        tool3.available = NO;
+        CLImageToolInfo *tool4 = [editor.toolInfo subToolInfoWithToolName:@"CLAdjustmentTool" recursive:YES];
+        tool4.available = NO;
+        CLImageToolInfo *tool5 = [editor.toolInfo subToolInfoWithToolName:@"CLEffectTool" recursive:YES];
+        tool5.available = NO;
+        //滤镜
+        CLImageToolInfo *tool6 = [editor.toolInfo subToolInfoWithToolName:@"CLFilterTool" recursive:YES];
+        tool6.available = NO;
+        CLImageToolInfo *tool7 = [editor.toolInfo subToolInfoWithToolName:@"CLSplashTool" recursive:YES];
+        tool7.available = NO;
+        //贴图
+        CLImageToolInfo *tool8 = [editor.toolInfo subToolInfoWithToolName:@"CLEmoticonTool" recursive:YES];
+        tool8.available = NO;
+        CLImageToolInfo *tool9 = [editor.toolInfo subToolInfoWithToolName:@"CLStickerTool" recursive:YES];
+        tool9.available = NO;
+        //放大缩小
+        CLImageToolInfo *tool10 = [editor.toolInfo subToolInfoWithToolName:@"CLResizeTool" recursive:YES];
+        tool10.available = NO;
+        //剪切
+        CLImageToolInfo *tool11 = [editor.toolInfo subToolInfoWithToolName:@"CLClippingTool" recursive:YES];
+        tool11.available = NO;
+         */
         
         [self presentViewController:editor animated:YES completion:nil];
         //[editor showInViewController:self withImageView:_imageView];
