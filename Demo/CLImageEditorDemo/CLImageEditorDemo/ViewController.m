@@ -76,7 +76,7 @@
         CLImageEditor *editor = [[CLImageEditor alloc] initWithImage:_imageView.image delegate:self];
         //CLImageEditor *editor = [[CLImageEditor alloc] initWithDelegate:self];
         
-        /*
+        /**/
         NSLog(@"%@", editor.toolInfo);
         NSLog(@"%@", editor.toolInfo.toolTreeDescription);
         
@@ -111,7 +111,7 @@
         //剪切
         CLImageToolInfo *tool11 = [editor.toolInfo subToolInfoWithToolName:@"CLClippingTool" recursive:YES];
         tool11.available = NO;
-         */
+         
         
         [self presentViewController:editor animated:YES completion:nil];
         //[editor showInViewController:self withImageView:_imageView];
