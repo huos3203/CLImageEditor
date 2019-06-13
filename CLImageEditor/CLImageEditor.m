@@ -8,6 +8,7 @@
 #import "CLImageEditor.h"
 
 #import "_CLImageEditorViewController.h"
+#import "JHImageEditorViewController.h"
 
 @interface CLImageEditor ()
 
@@ -35,6 +36,22 @@
 {
     return [[_CLImageEditorViewController alloc] initWithDelegate:delegate];
 }
+
+#pragma mark - 金和模块
+- (id)initWithJHImage:(UIImage*)image
+{
+    return [_CLImageEditorViewController new];
+}
+- (id)initWithJHImage:(UIImage*)image delegate:(id<CLImageEditorDelegate>)delegate
+{
+    return [[JHImageEditorViewController alloc] initWithImage:image delegate:delegate];
+}
+- (id)initWithJHDelegate:(id<CLImageEditorDelegate>)delegate
+{
+    return [[JHImageEditorViewController alloc] initWithDelegate:delegate];
+}
+
+
 
 - (void)showInViewController:(UIViewController*)controller withImageView:(UIImageView*)imageView;
 {

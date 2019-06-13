@@ -73,7 +73,7 @@
 - (void)pushedEditBtn
 {
     if(_imageView.image){
-        CLImageEditor *editor = [[CLImageEditor alloc] initWithImage:_imageView.image delegate:self];
+        CLImageEditor *editor = [[CLImageEditor alloc] initWithJHImage:_imageView.image delegate:self];
         //CLImageEditor *editor = [[CLImageEditor alloc] initWithDelegate:self];
         
         /**/
