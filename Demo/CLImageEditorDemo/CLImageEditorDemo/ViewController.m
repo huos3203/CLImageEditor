@@ -74,6 +74,13 @@
 {
     if(_imageView.image){
         CLImageEditor *editor = [[CLImageEditor alloc] initWithJHImage:_imageView.image delegate:self];
+        ///设置皮肤主题
+        editor.theme.bundleName = @"CLImageEditor";  //资源bundle名
+        editor.theme.backgroundColor = [UIColor blackColor];
+        editor.theme.statusBarHidden = YES;
+        editor.theme.toolbarColor = [UIColor blackColor];
+        editor.theme.toolIconColor = @"white";
+        editor.theme.toolbarTextColor = [UIColor whiteColor];
         //CLImageEditor *editor = [[CLImageEditor alloc] initWithDelegate:self];
         
         /**/
