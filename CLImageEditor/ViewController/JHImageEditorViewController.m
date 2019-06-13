@@ -522,8 +522,8 @@ static const CGFloat kMenuBarHeight = 80.0f;
 -(UIToolbar *)menuToolBar
 {
     if(!_menuToolBar){
-        _menuToolBar = [UIToolbar new];
-        _menuToolBar.barStyle = UIBarStyleBlackTranslucent;
+        _menuToolBar = [[JHMenuToolBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 40)];
+        _menuToolBar.backgroundColor = [UIColor blackColor];
         [self reloadMenuToolBar];
     }
     return _menuToolBar;
@@ -562,9 +562,8 @@ static const CGFloat kMenuBarHeight = 80.0f;
 -(UIBarButtonItem *)titleItem
 {
     if(!_titleItem){
-        _titleItem = [[UIBarButtonItem alloc] initWithTitle:@"用户类型" style:UIBarButtonItemStylePlain target:nil action:nil];
+        _titleItem = [[UIBarButtonItem alloc] initWithTitle:@"批注" style:UIBarButtonItemStyleDone target:nil action:nil];
         _titleItem.tintColor = [UIColor whiteColor];
-        _titleItem.enabled = NO;
     }
     return _titleItem;
 }
@@ -788,7 +787,9 @@ static const CGFloat kMenuBarHeight = 80.0f;
     if(self.currentTool){
         self.titleItem.title = self.currentTool.toolInfo.title;
         self.confirmBtn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Done"] style:UIBarButtonItemStylePlain target:self action:@selector(pushedDoneBtn:)];
+        self.confirmBtn.tintColor = [UIColor whiteColor];
         self.cancelBtn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"imgCancel"] style:UIBarButtonItemStylePlain target:self action:@selector(pushedCancelBtn:)];
+        self.cancelBtn.tintColor = [UIColor whiteColor];
         [self reloadMenuToolBar];
     }
     else{
@@ -915,4 +916,11 @@ static const CGFloat kMenuBarHeight = 80.0f;
     _imageView.frame = rct;
 }
 
+@end
+
+
+@implementation JHMenuToolBar
+- (void) drawRect:(CGRect)rect
+{
+}
 @end
