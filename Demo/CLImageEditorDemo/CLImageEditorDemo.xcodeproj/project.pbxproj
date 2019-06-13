@@ -7,6 +7,56 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8447E97A22B23F1D0042A21A /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD85D68618457388003106A3 /* Accelerate.framework */; };
+		8447E97B22B23F260042A21A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD5C1E0518350DC400790989 /* CoreGraphics.framework */; };
+		8447E97C22B23F2C0042A21A /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD85D68818457394003106A3 /* CoreImage.framework */; };
+		8447E97D22B23F330042A21A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD5C1E0718350DC400790989 /* UIKit.framework */; };
+		8447E97E22B23F390042A21A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD5C1E0318350DC400790989 /* Foundation.framework */; };
+		8451E2DE22B242E9002888B3 /* CLImageToolInfo+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = AD5A03151897528000347C57 /* CLImageToolInfo+Private.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		848BB40B22B2456000D35811 /* CLImageEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A02DE1897528000347C57 /* CLImageEditor.m */; };
+		848BB40C22B2456000D35811 /* CLImageEditorTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A02E01897528000347C57 /* CLImageEditorTheme.m */; };
+		848BB40D22B2456000D35811 /* CLImageToolInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A02E21897528000347C57 /* CLImageToolInfo.m */; };
+		848BB40E22B2456000D35811 /* CLImageToolBase.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A03071897528000347C57 /* CLImageToolBase.m */; };
+		848BB40F22B2456000D35811 /* CLAdjustmentTool.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A02E61897528000347C57 /* CLAdjustmentTool.m */; };
+		848BB41022B2456000D35811 /* CLBlurTool.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A02E91897528000347C57 /* CLBlurTool.m */; };
+		848BB41122B2456000D35811 /* CLClippingTool.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A02EC1897528000347C57 /* CLClippingTool.m */; };
+		848BB41222B2456000D35811 /* CLDrawTool.m in Sources */ = {isa = PBXBuildFile; fileRef = AD7B1DB919546130007C3BBC /* CLDrawTool.m */; };
+		848BB41322B2456000D35811 /* CLBloomEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A02F01897528000347C57 /* CLBloomEffect.m */; };
+		848BB41422B2456000D35811 /* CLGloomEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A02F21897528000347C57 /* CLGloomEffect.m */; };
+		848BB41522B2456000D35811 /* CLHighlightShadowEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A02F41897528000347C57 /* CLHighlightShadowEffect.m */; };
+		848BB41622B2456000D35811 /* CLHueEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A02F61897528000347C57 /* CLHueEffect.m */; };
+		848BB41722B2456000D35811 /* CLPixellateEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A02F81897528000347C57 /* CLPixellateEffect.m */; };
+		848BB41822B2456000D35811 /* CLPosterizeEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A02FA1897528000347C57 /* CLPosterizeEffect.m */; };
+		848BB41922B2456000D35811 /* CLSpotEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A02FC1897528000347C57 /* CLSpotEffect.m */; };
+		848BB41A22B2456000D35811 /* CLEffectBase.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A02FE1897528000347C57 /* CLEffectBase.m */; };
+		848BB41B22B2456000D35811 /* CLEffectTool.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A03001897528000347C57 /* CLEffectTool.m */; };
+		848BB41C22B2456000D35811 /* CLFilterBase.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A03031897528000347C57 /* CLFilterBase.m */; };
+		848BB41D22B2456000D35811 /* CLFilterTool.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A03051897528000347C57 /* CLFilterTool.m */; };
+		848BB41E22B2456000D35811 /* CLRotateTool.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A030A1897528000347C57 /* CLRotateTool.m */; };
+		848BB41F22B2456000D35811 /* CLToneCurveTool.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A030D1897528000347C57 /* CLToneCurveTool.m */; };
+		848BB42022B2456000D35811 /* CLCircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A03101897528000347C57 /* CLCircleView.m */; };
+		848BB42122B2456000D35811 /* CLColorPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A03121897528000347C57 /* CLColorPickerView.m */; };
+		848BB42222B2456000D35811 /* CLImageEditorTheme+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A03141897528000347C57 /* CLImageEditorTheme+Private.m */; };
+		848BB42322B2456000D35811 /* CLImageToolInfo+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A03161897528000347C57 /* CLImageToolInfo+Private.m */; };
+		848BB42422B2456000D35811 /* CLToolbarMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A031A1897528000347C57 /* CLToolbarMenuItem.m */; };
+		848BB42522B2456000D35811 /* UIView+CLImageToolInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A031C1897528000347C57 /* UIView+CLImageToolInfo.m */; };
+		848BB42622B2456000D35811 /* CLClassList.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A031F1897528000347C57 /* CLClassList.m */; };
+		848BB42722B2456000D35811 /* CLSplineInterpolator.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A03211897528000347C57 /* CLSplineInterpolator.m */; };
+		848BB42822B2456000D35811 /* UIDevice+SystemVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A03231897528000347C57 /* UIDevice+SystemVersion.m */; };
+		848BB42922B2456000D35811 /* UIImage+Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A03251897528000347C57 /* UIImage+Utility.m */; };
+		848BB42A22B2456000D35811 /* UIView+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A03271897528000347C57 /* UIView+Frame.m */; };
+		848BB42B22B2456000D35811 /* _CLImageEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A032A1897528000347C57 /* _CLImageEditorViewController.m */; };
+		848BB42C22B2456000D35811 /* CLSplashTool.m in Sources */ = {isa = PBXBuildFile; fileRef = AD359C311954FB4D00B763CF /* CLSplashTool.m */; };
+		848BB42D22B2456000D35811 /* CLEmoticonTool.m in Sources */ = {isa = PBXBuildFile; fileRef = AD29BB5C18EA471A0084D3D6 /* CLEmoticonTool.m */; };
+		848BB42E22B2456000D35811 /* CLGPUImageVignetteFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = AD1D2C6A1897538900752339 /* CLGPUImageVignetteFilter.m */; };
+		848BB42F22B2456000D35811 /* CLResizeTool.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A032F1897528000347C57 /* CLResizeTool.m */; };
+		848BB43022B2456000D35811 /* CLStickerTool.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A03321897528000347C57 /* CLStickerTool.m */; };
+		848BB43122B2456000D35811 /* CLFontPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A03351897528000347C57 /* CLFontPickerView.m */; };
+		848BB43222B2456000D35811 /* CLPickerDrum.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A03371897528000347C57 /* CLPickerDrum.m */; };
+		848BB43322B2456000D35811 /* CLPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A03391897528000347C57 /* CLPickerView.m */; };
+		848BB43422B2456000D35811 /* CLTextLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A033B1897528000347C57 /* CLTextLabel.m */; };
+		848BB43522B2456000D35811 /* CLTextSettingView.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A033D1897528000347C57 /* CLTextSettingView.m */; };
+		848BB43622B2456000D35811 /* CLTextTool.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A033F1897528000347C57 /* CLTextTool.m */; };
 		849BAAEA22B2030B0028D888 /* CLImageEditorSDK.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 849BAAE722B2030B0028D888 /* CLImageEditorSDK.h */; };
 		849BAAF722B21F380028D888 /* CLImageEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A02DE1897528000347C57 /* CLImageEditor.m */; };
 		849BAAF822B21F380028D888 /* CLImageEditorTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A02E01897528000347C57 /* CLImageEditorTheme.m */; };
@@ -52,10 +102,6 @@
 		849BAB2022B21F380028D888 /* CLTextLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A033B1897528000347C57 /* CLTextLabel.m */; };
 		849BAB2122B21F380028D888 /* CLTextSettingView.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A033D1897528000347C57 /* CLTextSettingView.m */; };
 		849BAB2222B21F380028D888 /* CLTextTool.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A033F1897528000347C57 /* CLTextTool.m */; };
-		849BAB2322B21FC10028D888 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD85D68818457394003106A3 /* CoreImage.framework */; };
-		849BAB2422B21FC90028D888 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD85D68618457388003106A3 /* Accelerate.framework */; };
-		849BAB2522B21FCE0028D888 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD5C1E0718350DC400790989 /* UIKit.framework */; };
-		849BAB2622B21FD40028D888 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD5C1E0318350DC400790989 /* Foundation.framework */; };
 		84A4EB7522B2221A004C3FC2 /* CLImageEditorSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 849BAAE722B2030B0028D888 /* CLImageEditorSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		84A4EB7622B22321004C3FC2 /* CLImageEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = AD5A02DD1897528000347C57 /* CLImageEditor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		84A4EB7822B22365004C3FC2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5C1E1918350DC400790989 /* ViewController.m */; };
@@ -204,10 +250,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				849BAB2622B21FD40028D888 /* Foundation.framework in Frameworks */,
-				849BAB2522B21FCE0028D888 /* UIKit.framework in Frameworks */,
-				849BAB2422B21FC90028D888 /* Accelerate.framework in Frameworks */,
-				849BAB2322B21FC10028D888 /* CoreImage.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -215,6 +257,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8447E97E22B23F390042A21A /* Foundation.framework in Frameworks */,
+				8447E97D22B23F330042A21A /* UIKit.framework in Frameworks */,
+				8447E97C22B23F2C0042A21A /* CoreImage.framework in Frameworks */,
+				8447E97B22B23F260042A21A /* CoreGraphics.framework in Frameworks */,
+				8447E97A22B23F1D0042A21A /* Accelerate.framework in Frameworks */,
 				84E50EBE22B225C10041A381 /* libCLImageEditorSDK.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -558,6 +605,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				84A4EB7522B2221A004C3FC2 /* CLImageEditorSDK.h in Headers */,
+				8451E2DE22B242E9002888B3 /* CLImageToolInfo+Private.h in Headers */,
 				84A4EB7622B22321004C3FC2 /* CLImageEditor.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -714,6 +762,50 @@
 				84A4EB7822B22365004C3FC2 /* ViewController.m in Sources */,
 				AD5C1E1018350DC400790989 /* main.m in Sources */,
 				AD5C1E1418350DC400790989 /* AppDelegate.m in Sources */,
+				848BB40B22B2456000D35811 /* CLImageEditor.m in Sources */,
+				848BB40C22B2456000D35811 /* CLImageEditorTheme.m in Sources */,
+				848BB40D22B2456000D35811 /* CLImageToolInfo.m in Sources */,
+				848BB40E22B2456000D35811 /* CLImageToolBase.m in Sources */,
+				848BB40F22B2456000D35811 /* CLAdjustmentTool.m in Sources */,
+				848BB41022B2456000D35811 /* CLBlurTool.m in Sources */,
+				848BB41122B2456000D35811 /* CLClippingTool.m in Sources */,
+				848BB41222B2456000D35811 /* CLDrawTool.m in Sources */,
+				848BB41322B2456000D35811 /* CLBloomEffect.m in Sources */,
+				848BB41422B2456000D35811 /* CLGloomEffect.m in Sources */,
+				848BB41522B2456000D35811 /* CLHighlightShadowEffect.m in Sources */,
+				848BB41622B2456000D35811 /* CLHueEffect.m in Sources */,
+				848BB41722B2456000D35811 /* CLPixellateEffect.m in Sources */,
+				848BB41822B2456000D35811 /* CLPosterizeEffect.m in Sources */,
+				848BB41922B2456000D35811 /* CLSpotEffect.m in Sources */,
+				848BB41A22B2456000D35811 /* CLEffectBase.m in Sources */,
+				848BB41B22B2456000D35811 /* CLEffectTool.m in Sources */,
+				848BB41C22B2456000D35811 /* CLFilterBase.m in Sources */,
+				848BB41D22B2456000D35811 /* CLFilterTool.m in Sources */,
+				848BB41E22B2456000D35811 /* CLRotateTool.m in Sources */,
+				848BB41F22B2456000D35811 /* CLToneCurveTool.m in Sources */,
+				848BB42022B2456000D35811 /* CLCircleView.m in Sources */,
+				848BB42122B2456000D35811 /* CLColorPickerView.m in Sources */,
+				848BB42222B2456000D35811 /* CLImageEditorTheme+Private.m in Sources */,
+				848BB42322B2456000D35811 /* CLImageToolInfo+Private.m in Sources */,
+				848BB42422B2456000D35811 /* CLToolbarMenuItem.m in Sources */,
+				848BB42522B2456000D35811 /* UIView+CLImageToolInfo.m in Sources */,
+				848BB42622B2456000D35811 /* CLClassList.m in Sources */,
+				848BB42722B2456000D35811 /* CLSplineInterpolator.m in Sources */,
+				848BB42822B2456000D35811 /* UIDevice+SystemVersion.m in Sources */,
+				848BB42922B2456000D35811 /* UIImage+Utility.m in Sources */,
+				848BB42A22B2456000D35811 /* UIView+Frame.m in Sources */,
+				848BB42B22B2456000D35811 /* _CLImageEditorViewController.m in Sources */,
+				848BB42C22B2456000D35811 /* CLSplashTool.m in Sources */,
+				848BB42D22B2456000D35811 /* CLEmoticonTool.m in Sources */,
+				848BB42E22B2456000D35811 /* CLGPUImageVignetteFilter.m in Sources */,
+				848BB42F22B2456000D35811 /* CLResizeTool.m in Sources */,
+				848BB43022B2456000D35811 /* CLStickerTool.m in Sources */,
+				848BB43122B2456000D35811 /* CLFontPickerView.m in Sources */,
+				848BB43222B2456000D35811 /* CLPickerDrum.m in Sources */,
+				848BB43322B2456000D35811 /* CLPickerView.m in Sources */,
+				848BB43422B2456000D35811 /* CLTextLabel.m in Sources */,
+				848BB43522B2456000D35811 /* CLTextSettingView.m in Sources */,
+				848BB43622B2456000D35811 /* CLTextTool.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
