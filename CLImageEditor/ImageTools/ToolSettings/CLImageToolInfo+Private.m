@@ -18,6 +18,10 @@
 
 @implementation CLImageToolInfo (Private)
 
++ (void)load{
+    
+}
+
 + (CLImageToolInfo*)toolInfoForToolClass:(Class<CLImageToolProtocol>)toolClass;
 {
     if([(Class)toolClass conformsToProtocol:@protocol(CLImageToolProtocol)] && [toolClass isAvailable]){
