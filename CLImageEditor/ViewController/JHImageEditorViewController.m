@@ -21,6 +21,10 @@ static const CGFloat kMenuBarHeight = 80.0f;
 @property (nonatomic, strong) CLImageToolBase *currentTool;
 @property (nonatomic, strong, readwrite) CLImageToolInfo *toolInfo;
 @property (nonatomic, strong) UIImageView *targetImageView;
+@property (strong, nonatomic) UIToolbar *menuToolBar;
+@property (strong, nonatomic) UIBarButtonItem *confirmBtn;
+@property (strong, nonatomic) UIBarButtonItem *titleItem;
+@property (strong, nonatomic) UIBarButtonItem *cancelBtn;
 @end
 
 
@@ -158,9 +162,22 @@ static const CGFloat kMenuBarHeight = 80.0f;
         
         [self.view addSubview:menuScroll];
         self.menuView = menuScroll;
-        [JHImageEditorViewController setConstraintsLeading:@0 trailing:@0 top:nil bottom:@0 height:@(menuScroll.height) width:nil parent:self.view child:menuScroll peer:nil];
+        [JHImageEditorViewController setConstraintsLeading:@0 trailing:@0 top:nil bottom:@(-self.menuToolBar.height) height:@(menuScroll.height) width:nil parent:self.view child:menuScroll peer:nil];
     }
     self.menuView.backgroundColor = [CLImageEditorTheme toolbarColor];
+}
+
+-(void)installMenuToolBar
+{
+    if (@available(iOS 11.0, *)) {
+        UIEdgeInsets theInsets = [UIApplication sharedApplication].keyWindow.rootViewController.view.safeAreaInsets;
+        self.menuToolBar.height += theInsets.bottom;
+    }
+    self.menuToolBar.bottom = self.view.height - self.menuToolBar.height;
+    self.menuToolBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+    [self.view addSubview:self.menuToolBar];
+    [JHImageEditorViewController setConstraintsLeading:@0 trailing:@0 top:nil bottom:@0 height:@(self.menuToolBar.height) width:nil parent:self.view child:self.menuToolBar peer:nil];
+    
 }
 
 - (void)initImageScrollView
@@ -327,7 +344,8 @@ static const CGFloat kMenuBarHeight = 80.0f;
         self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     }
     
-    [self initNavigationBar];
+//    [self initNavigationBar];
+    [self installMenuToolBar];
     [self initMenuScrollView];
     [self initImageScrollView];
     
@@ -500,6 +518,57 @@ static const CGFloat kMenuBarHeight = 80.0f;
 {
     return _scrollView;
 }
+
+-(UIToolbar *)menuToolBar
+{
+    if(!_menuToolBar){
+        _menuToolBar = [UIToolbar new];
+        _menuToolBar.barStyle = UIBarStyleBlackTranslucent;
+        [self reloadMenuToolBar];
+    }
+    return _menuToolBar;
+}
+
+-(void)reloadMenuToolBar
+{
+    //创建工具栏
+    NSMutableArray *items = [[NSMutableArray alloc] initWithCapacity:3];
+    UIBarButtonItem *flexibleSpaceItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    [items addObject:self.cancelBtn];
+    [items addObject:flexibleSpaceItem];
+    [items addObject:self.titleItem];
+    [items addObject:flexibleSpaceItem];
+    [items addObject:self.confirmBtn];
+    self.menuToolBar.items = items;
+}
+
+-(UIBarButtonItem *)confirmBtn
+{
+    if(!_confirmBtn){
+        _confirmBtn = [[UIBarButtonItem alloc] initWithTitle:@"上传" style:UIBarButtonItemStyleDone target:self action:@selector(pushedFinishBtn:)];
+        _confirmBtn.tintColor = [UIColor whiteColor];
+    }
+    return _confirmBtn;
+}
+
+-(UIBarButtonItem *)cancelBtn
+{
+    if(!_cancelBtn){
+        _cancelBtn = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleDone target:self action:@selector(pushedCloseBtn:)];
+        _cancelBtn.tintColor = [UIColor whiteColor];
+    }
+    return _cancelBtn;
+}
+-(UIBarButtonItem *)titleItem
+{
+    if(!_titleItem){
+        _titleItem = [[UIBarButtonItem alloc] initWithTitle:@"用户类型" style:UIBarButtonItemStylePlain target:nil action:nil];
+        _titleItem.tintColor = [UIColor whiteColor];
+        _titleItem.enabled = NO;
+    }
+    return _titleItem;
+}
+
 
 #pragma mark- ImageTool setting
 
@@ -710,19 +779,22 @@ static const CGFloat kMenuBarHeight = 80.0f;
     }
 }
 
+#pragma mark - toolbar
 - (void)swapToolBarWithEditing:(BOOL)editing
 {
     [self swapMenuViewWithEditing:editing];
     [self swapNavigationBarWithEditing:editing];
     
     if(self.currentTool){
-        UINavigationItem *item  = [[UINavigationItem alloc] initWithTitle:self.currentTool.toolInfo.title];
-        item.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[CLImageEditorTheme localizedString:@"CLImageEditor_OKBtnTitle" withDefault:@"OK"] style:UIBarButtonItemStyleDone target:self action:@selector(pushedDoneBtn:)];
-        item.leftBarButtonItem  = [[UIBarButtonItem alloc] initWithTitle:[CLImageEditorTheme localizedString:@"CLImageEditor_BackBtnTitle" withDefault:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(pushedCancelBtn:)];
-        
-        [_navigationBar pushNavigationItem:item animated:(self.navigationController==nil)];
+        self.titleItem.title = self.currentTool.toolInfo.title;
+        self.confirmBtn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Done"] style:UIBarButtonItemStylePlain target:self action:@selector(pushedDoneBtn:)];
+        self.cancelBtn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"imgCancel"] style:UIBarButtonItemStylePlain target:self action:@selector(pushedCancelBtn:)];
+        [self reloadMenuToolBar];
     }
     else{
+        self.confirmBtn = nil;
+        self.cancelBtn = nil;
+        [self reloadMenuToolBar];
         [_navigationBar popNavigationItemAnimated:(self.navigationController==nil)];
     }
 }

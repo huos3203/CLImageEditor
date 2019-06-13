@@ -273,6 +273,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		845094C922B26F78007F39FA /* JHTools */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = JHTools;
+			sourceTree = "<group>";
+		};
 		849BAAE622B2030B0028D888 /* CLImageEditorSDK */ = {
 			isa = PBXGroup;
 			children = (
@@ -330,6 +337,7 @@
 		AD5A02E31897528000347C57 /* ImageTools */ = {
 			isa = PBXGroup;
 			children = (
+				845094C922B26F78007F39FA /* JHTools */,
 				AD5A03061897528000347C57 /* CLImageToolBase.h */,
 				AD5A03071897528000347C57 /* CLImageToolBase.m */,
 				AD5A02E41897528000347C57 /* CLAdjustmentTool */,
