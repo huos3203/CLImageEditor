@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 
-#import "CLImageEditor.h"
+#import "CLImageEditorSDK.h"
 
 @interface ViewController ()
 <CLImageEditorDelegate, CLImageEditorTransitionDelegate, CLImageEditorThemeDelegate>
