@@ -14,7 +14,7 @@
 #pragma mark- JHImageEditorViewController
 
 static const CGFloat kNavBarHeight = 44.0f;
-static const CGFloat kMenuBarHeight = 50.0f;
+static const CGFloat kMenuBarHeight = 60.0f;
 
 @interface JHImageEditorViewController()
 <CLImageToolProtocol, UINavigationBarDelegate>
@@ -170,7 +170,7 @@ static const CGFloat kMenuBarHeight = 50.0f;
     self.menuToolBar.bottom = self.view.height - self.menuToolBar.height;
     self.menuToolBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
     [self.view addSubview:self.menuToolBar];
-    [JHImageEditorViewController setConstraintsLeading:@0 trailing:@0 top:nil bottom:@0 height:@(kNavBarHeight) width:nil parent:self.view child:self.menuToolBar peer:nil];
+    [JHImageEditorViewController setConstraintsLeading:@-10 trailing:@10 top:nil bottom:@-5 height:@(kNavBarHeight) width:nil parent:self.view child:self.menuToolBar peer:nil];
     
 }
 
