@@ -87,11 +87,11 @@
         NSLog(@"%@", editor.toolInfo);
         NSLog(@"%@", editor.toolInfo.toolTreeDescription);
         CLImageToolInfo *tool0 = [editor.toolInfo subToolInfoWithToolName:@"CLDrawTool" recursive:NO];
-        tool0.title = @"划重点";
+        tool0.title = @"涂鸦";
         tool0.available = YES;//如果available设置为no，则从菜单视图中删除。
         tool0.dockedNumber = -1;//置于顶层
         CLImageToolInfo *tool01 = [editor.toolInfo subToolInfoWithToolName:@"CLTextTool" recursive:NO];
-        tool01.title = @"加备注";
+        tool01.title = @"文字";
         tool01.available = YES;//如果available设置为no，则从菜单视图中删除。
         tool01.dockedNumber = -1;//置于顶层
         [self removeOtherBut:editor];

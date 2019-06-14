@@ -14,7 +14,7 @@
 #pragma mark- JHImageEditorViewController
 
 static const CGFloat kNavBarHeight = 44.0f;
-static const CGFloat kMenuBarHeight = 80.0f;
+static const CGFloat kMenuBarHeight = 50.0f;
 
 @interface JHImageEditorViewController()
 <CLImageToolProtocol, UINavigationBarDelegate>
@@ -149,20 +149,14 @@ static const CGFloat kMenuBarHeight = 80.0f;
     if(self.menuView==nil){
         UIScrollView *menuScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, kMenuBarHeight)];
         
-        // Adjust for iPhone X
-        if (@available(iOS 11.0, *)) {
-            UIEdgeInsets theInsets = [UIApplication sharedApplication].keyWindow.rootViewController.view.safeAreaInsets;
-            menuScroll.height += theInsets.bottom;
-        }
-        
-        menuScroll.top = self.view.height - menuScroll.height;
+        menuScroll.top = self.view.height - kMenuBarHeight - kNavBarHeight;
         menuScroll.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
         menuScroll.showsHorizontalScrollIndicator = NO;
         menuScroll.showsVerticalScrollIndicator = NO;
         
         [self.view addSubview:menuScroll];
         self.menuView = menuScroll;
-        [JHImageEditorViewController setConstraintsLeading:@0 trailing:@0 top:nil bottom:@(-self.menuToolBar.height) height:@(menuScroll.height) width:nil parent:self.view child:menuScroll peer:nil];
+        [JHImageEditorViewController setConstraintsLeading:@0 trailing:@0 top:nil bottom:@(-kNavBarHeight) height:@(menuScroll.height) width:nil parent:self.view child:menuScroll peer:nil];
     }
     self.menuView.backgroundColor = [CLImageEditorTheme toolbarColor];
 }
@@ -176,7 +170,7 @@ static const CGFloat kMenuBarHeight = 80.0f;
     self.menuToolBar.bottom = self.view.height - self.menuToolBar.height;
     self.menuToolBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
     [self.view addSubview:self.menuToolBar];
-    [JHImageEditorViewController setConstraintsLeading:@0 trailing:@0 top:nil bottom:@0 height:@(self.menuToolBar.height) width:nil parent:self.view child:self.menuToolBar peer:nil];
+    [JHImageEditorViewController setConstraintsLeading:@0 trailing:@0 top:nil bottom:@0 height:@(kNavBarHeight) width:nil parent:self.view child:self.menuToolBar peer:nil];
     
 }
 
@@ -522,8 +516,8 @@ static const CGFloat kMenuBarHeight = 80.0f;
 -(UIToolbar *)menuToolBar
 {
     if(!_menuToolBar){
-        _menuToolBar = [[JHMenuToolBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 40)];
-        _menuToolBar.backgroundColor = [UIColor blackColor];
+        _menuToolBar = [[JHMenuToolBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, kNavBarHeight)];
+        _menuToolBar.backgroundColor = [CLImageEditorTheme toolbarColor];
         [self reloadMenuToolBar];
     }
     return _menuToolBar;
@@ -562,7 +556,7 @@ static const CGFloat kMenuBarHeight = 80.0f;
 -(UIBarButtonItem *)titleItem
 {
     if(!_titleItem){
-        _titleItem = [[UIBarButtonItem alloc] initWithTitle:@"批注" style:UIBarButtonItemStyleDone target:nil action:nil];
+        _titleItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStyleDone target:nil action:nil];
         _titleItem.tintColor = [UIColor whiteColor];
     }
     return _titleItem;
@@ -608,8 +602,8 @@ static const CGFloat kMenuBarHeight = 80.0f;
     for(UIView *sub in _menuView.subviews){ [sub removeFromSuperview]; }
     
     CGFloat x = 0;
-    CGFloat W = 70;
-    CGFloat H = _menuView.height;
+    CGFloat W = 40;
+    CGFloat H = kMenuBarHeight;
     
     int toolCount = 0;
     CGFloat padding = 0;
@@ -633,7 +627,7 @@ static const CGFloat kMenuBarHeight = 80.0f;
         [_menuView addSubview:view];
         x += W+padding;
     }
-    _menuView.contentSize = CGSizeMake(MAX(x, _menuView.frame.size.width+1), 0);
+    _menuView.contentSize = CGSizeMake(MAX(x, _menuView.frame.size.width), 0);
 }
 
 - (void)resetImageViewFrame
@@ -795,6 +789,7 @@ static const CGFloat kMenuBarHeight = 80.0f;
     else{
         self.confirmBtn = nil;
         self.cancelBtn = nil;
+        self.titleItem = nil;
         [self reloadMenuToolBar];
         [_navigationBar popNavigationItemAnimated:(self.navigationController==nil)];
     }
