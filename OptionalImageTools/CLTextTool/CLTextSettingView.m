@@ -91,8 +91,12 @@
     _scrollView.scrollEnabled = NO;
     [self addSubview:_scrollView];
     
-    _textView = [[UITextView alloc] initWithFrame:CGRectMake(10, 0, self.width-42, 80)];
+    _textView = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, self.width-60, 35)];
     _textView.delegate = self;
+    _textView.layer.borderColor = [UIColor colorWithRed:233/255.0 green:233/255.0 blue:233/255.0 alpha:1.0].CGColor;
+    _textView.layer.cornerRadius = 2;
+    _textView.layer.borderWidth = 1;
+    _textView.font = [UIFont systemFontOfSize:14];
     _textView.backgroundColor = [UIColor clearColor];
     [_scrollView addSubview:_textView];
     
@@ -230,13 +234,13 @@
 
 - (void)keyBoardWillShow:(NSNotification *)notificatioin
 {
-    [self keyBoardWillChange:notificatioin withTextViewHeight:80];
+    [self keyBoardWillChange:notificatioin withTextViewHeight:30];
     [_textView scrollRangeToVisible:_textView.selectedRange];
 }
 
 - (void)keyBoardWillHide:(NSNotification *)notificatioin
 {
-    [self keyBoardWillChange:notificatioin withTextViewHeight:self.height - 20];
+    [self keyBoardWillChange:notificatioin withTextViewHeight:30];
 }
 
 - (void)keyBoardWillChange:(NSNotification *)notificatioin withTextViewHeight:(CGFloat)height
@@ -252,7 +256,7 @@
                         options:UIViewAnimationOptionBeginFromCurrentState | (animationCurve<<16)
                      animations:^{
                          self->_textView.height = height;
-                         CGFloat dy = MIN(0, (keyboardFrame.origin.y - self->_textView.height) - self.top);
+                         CGFloat dy = MIN(0, (keyboardFrame.origin.y - self->_textView.height) - self.top - 20);
                          self.transform = CGAffineTransformMakeTranslation(0, dy);
                      } completion:^(BOOL finished) {
                          

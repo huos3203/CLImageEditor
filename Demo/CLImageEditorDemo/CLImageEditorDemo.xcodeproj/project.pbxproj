@@ -59,11 +59,11 @@
 		849BAB1F22B21F380028D888 /* CLPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A03391897528000347C57 /* CLPickerView.m */; };
 		849BAB2022B21F380028D888 /* CLTextLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A033B1897528000347C57 /* CLTextLabel.m */; };
 		849BAB2122B21F380028D888 /* CLTextSettingView.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A033D1897528000347C57 /* CLTextSettingView.m */; };
-		849BAB2222B21F380028D888 /* CLTextTool.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A033F1897528000347C57 /* CLTextTool.m */; };
 		84A0B1C222B36F4C00E10D46 /* JHColorBoardView.h in Headers */ = {isa = PBXBuildFile; fileRef = 84A0B1C022B36F4C00E10D46 /* JHColorBoardView.h */; };
 		84A0B1C422B36F4C00E10D46 /* JHColorBoardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A0B1C122B36F4C00E10D46 /* JHColorBoardView.m */; };
 		84A4EB7522B2221A004C3FC2 /* CLImageEditorSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 849BAAE722B2030B0028D888 /* CLImageEditorSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		84A4EB7822B22365004C3FC2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5C1E1918350DC400790989 /* ViewController.m */; };
+		84B32F7A22B3AB2D00EA1E73 /* CLTextTool.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A033F1897528000347C57 /* CLTextTool.m */; };
 		84E50EBE22B225C10041A381 /* libCLImageEditorSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 849BAAE522B2030B0028D888 /* libCLImageEditorSDK.a */; };
 		84E581A722B2299700EC25B1 /* CLImageEditorSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = 849BAAE822B2030B0028D888 /* CLImageEditorSDK.m */; };
 		AD5A03401897528000347C57 /* CLImageEditor.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AD5A02DC1897528000347C57 /* CLImageEditor.bundle */; };
@@ -740,7 +740,6 @@
 				849BAB1F22B21F380028D888 /* CLPickerView.m in Sources */,
 				849BAB2022B21F380028D888 /* CLTextLabel.m in Sources */,
 				849BAB2122B21F380028D888 /* CLTextSettingView.m in Sources */,
-				849BAB2222B21F380028D888 /* CLTextTool.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -749,6 +748,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				84A4EB7822B22365004C3FC2 /* ViewController.m in Sources */,
+				84B32F7A22B3AB2D00EA1E73 /* CLTextTool.m in Sources */,
 				AD5C1E1018350DC400790989 /* main.m in Sources */,
 				AD5C1E1418350DC400790989 /* AppDelegate.m in Sources */,
 			);

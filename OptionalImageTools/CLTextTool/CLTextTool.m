@@ -13,6 +13,7 @@
 #import "CLTextLabel.h"
 
 #import "CLTextSettingView.h"
+#import "JHColorBoardView.h"
 
 static NSString* const CLTextViewActiveViewDidChangeNotification = @"CLTextViewActiveViewDidChangeNotificationString";
 static NSString* const CLTextViewActiveViewDidTapNotification = @"CLTextViewActiveViewDidTapNotificationString";
@@ -39,6 +40,7 @@ static NSString* const kCLTextToolAlignRightIconName = @"alignRightIconAssetsNam
 - (id)initWithTool:(CLTextTool*)tool;
 - (void)setScale:(CGFloat)scale;
 - (void)sizeToFitWithMaxWidth:(CGFloat)width lineHeight:(CGFloat)lineHeight;
+-(void)removeViewBorder:(UIView *)view;
 
 @end
 
@@ -47,6 +49,7 @@ static NSString* const kCLTextToolAlignRightIconName = @"alignRightIconAssetsNam
 @interface CLTextTool()
 <CLColorPickerViewDelegate, CLFontPickerViewDelegate, UITextViewDelegate, CLTextSettingViewDelegate>
 @property (nonatomic, strong) _CLTextView *selectedTextView;
+@property (strong, nonatomic) UIColor *drawColor;
 @end
 
 @implementation CLTextTool
@@ -124,18 +127,18 @@ static NSString* const kCLTextToolAlignRightIconName = @"alignRightIconAssetsNam
     _workingView = [[UIView alloc] initWithFrame:[self.editor.view convertRect:self.editor.imageView.frame fromView:self.editor.imageView.superview]];
     _workingView.clipsToBounds = YES;
     [self.editor.view addSubview:_workingView];
-    
-    _settingView = [[CLTextSettingView alloc] initWithFrame:CGRectMake(0, 0, self.editor.view.width, 180)];
+    ///设置页面
+    _settingView = [[CLTextSettingView alloc] initWithFrame:CGRectMake(0, 0, self.editor.view.width, 50)];
     _settingView.top = _menuScroll.top - _settingView.height;
-    _settingView.backgroundColor = [CLImageEditorTheme toolbarColor];
-    _settingView.textColor = [CLImageEditorTheme toolbarTextColor];
+    _settingView.backgroundColor = [UIColor whiteColor];
+    _settingView.textColor = [UIColor colorWithRed:94/255.0 green:99/255.0 blue:123/255.0 alpha:1.0];
     _settingView.fontPickerForegroundColor = _settingView.backgroundColor;
     _settingView.delegate = self;
     [self.editor.view addSubview:_settingView];
     
     UIButton *okButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [okButton setImage:[self imageForKey:kCLTextToolCloseIconName defaultImageName:@"btn_delete.png"] forState:UIControlStateNormal];
-    okButton.frame = CGRectMake(_settingView.width-32, 0, 32, 32);
+    [okButton setImage:[UIImage imageNamed:@"textOK"] forState:UIControlStateNormal];
+    okButton.frame = CGRectMake(_settingView.width-40, 8, 32, 32);
     [okButton addTarget:self action:@selector(pushedButton:) forControlEvents:UIControlEventTouchUpInside];
     [_settingView addSubview:okButton];
     
@@ -208,44 +211,6 @@ static NSString* const kCLTextToolAlignRightIconName = @"alignRightIconAssetsNam
     return tmp;
 }
 
-- (void)setMenuBtnEnabled:(BOOL)enabled
-{
-    _textBtn.userInteractionEnabled =
-    _colorBtn.userInteractionEnabled =
-    _fontBtn.userInteractionEnabled =
-    _alignLeftBtn.userInteractionEnabled =
-    _alignCenterBtn.userInteractionEnabled =
-    _alignRightBtn.userInteractionEnabled = enabled;
-}
-
-- (void)setSelectedTextView:(_CLTextView *)selectedTextView
-{
-    if(selectedTextView != _selectedTextView){
-        _selectedTextView = selectedTextView;
-    }
-    
-    [self setMenuBtnEnabled:(_selectedTextView!=nil)];
-    
-    if(_selectedTextView==nil){
-        [self hideSettingView];
-        
-        _colorBtn.iconView.backgroundColor = _settingView.selectedFillColor;
-        _alignLeftBtn.selected = _alignCenterBtn.selected = _alignRightBtn.selected = NO;
-    }
-    else{
-        _colorBtn.iconView.backgroundColor = selectedTextView.fillColor;
-        _colorBtn.iconView.layer.borderColor = selectedTextView.borderColor.CGColor;
-        _colorBtn.iconView.layer.borderWidth = MAX(2, 10*selectedTextView.borderWidth);
-        
-        _settingView.selectedText = selectedTextView.text;
-        _settingView.selectedFillColor = selectedTextView.fillColor;
-        _settingView.selectedBorderColor = selectedTextView.borderColor;
-        _settingView.selectedBorderWidth = selectedTextView.borderWidth;
-        _settingView.selectedFont = selectedTextView.font;
-        [self setTextAlignment:selectedTextView.textAlignment];
-    }
-}
-
 - (void)activeTextViewDidChange:(NSNotification*)notification
 {
     self.selectedTextView = notification.object;
@@ -255,89 +220,15 @@ static NSString* const kCLTextToolAlignRightIconName = @"alignRightIconAssetsNam
 {
     [self beginTextEditing];
 }
-
 - (void)setMenu
 {
-    CGFloat W = 70;
-    CGFloat H = _menuScroll.height;
-    CGFloat x = 0;
-    
-    NSArray *_menu = @[
-                       @{@"title":[CLImageEditorTheme localizedString:@"CLTextTool_MenuItemNew" withDefault:@"New"], @"icon":[self imageForKey:kCLTextToolNewTextIconName defaultImageName:@"btn_add.png"]},
-                       @{@"title":[CLImageEditorTheme localizedString:@"CLTextTool_MenuItemText" withDefault:@"Text"], @"icon":[self imageForKey:kCLTextToolEditTextIconName defaultImageName:@"icon.png"]},
-                       @{@"title":[CLImageEditorTheme localizedString:@"CLTextTool_MenuItemColor" withDefault:@"Color"]},
-                       @{@"title":[CLImageEditorTheme localizedString:@"CLTextTool_MenuItemFont" withDefault:@"Font"], @"icon":[self imageForKey:kCLTextToolFontIconName defaultImageName:@"btn_font.png"]},
-                       @{@"title":[CLImageEditorTheme localizedString:@"CLTextTool_MenuItemAlignLeft" withDefault:@" "], @"icon":[self imageForKey:kCLTextToolAlignLeftIconName defaultImageName:@"btn_align_left.png"]},
-                       @{@"title":[CLImageEditorTheme localizedString:@"CLTextTool_MenuItemAlignCenter" withDefault:@" "], @"icon":[self imageForKey:kCLTextToolAlignCenterIconName defaultImageName:@"btn_align_center.png"]},
-                       @{@"title":[CLImageEditorTheme localizedString:@"CLTextTool_MenuItemAlignRight" withDefault:@" "], @"icon":[self imageForKey:kCLTextToolAlignRightIconName defaultImageName:@"btn_align_right.png"]},
-                       ];
-    
-    NSInteger tag = 0;
-    for(NSDictionary *obj in _menu){
-        CLToolbarMenuItem *view = [CLImageEditorTheme menuItemWithFrame:CGRectMake(x, 0, W, H) target:self action:@selector(tappedMenuPanel:) toolInfo:nil];
-        view.tag = tag++;
-        view.title = obj[@"title"];
-        view.iconImage = obj[@"icon"];
-        
-        switch (view.tag) {
-            case 1:
-                _textBtn = view;
-                break;
-            case 2:
-                _colorBtn = view;
-                _colorBtn.iconView.layer.borderWidth = 2;
-                _colorBtn.iconView.layer.borderColor = [[UIColor blackColor] CGColor];
-                break;
-            case 3:
-                _fontBtn = view;
-                break;
-            case 4:
-                _alignLeftBtn = view;
-                break;
-            case 5:
-                _alignCenterBtn = view;
-                break;
-            case 6:
-                _alignRightBtn = view;
-                break;
-        }
-        
-        [_menuScroll addSubview:view];
-        x += W;
-    }
-    _menuScroll.contentSize = CGSizeMake(MAX(x, _menuScroll.frame.size.width+1), 0);
-}
-
-- (void)tappedMenuPanel:(UITapGestureRecognizer*)sender
-{
-    UIView *view = sender.view;
-    
-    switch (view.tag) {
-        case 0:
-            [self addNewText];
-            break;
-        case 1:
-        case 2:
-        case 3:
-            [self showSettingViewWithMenuIndex:view.tag-1];
-            break;
-        case 4:
-            [self setTextAlignment:NSTextAlignmentLeft];
-            break;
-        case 5:
-            [self setTextAlignment:NSTextAlignmentCenter];
-            break;
-        case 6:
-            [self setTextAlignment:NSTextAlignmentRight];
-            break;
-    }
-    
-    view.alpha = 0.2;
-    [UIView animateWithDuration:kCLImageToolAnimationDuration
-                     animations:^{
-                         view.alpha = 1;
-                     }
-     ];
+    __weak typeof(self) weakSelf = self;
+    JHColorBoardView *board = [[JHColorBoardView alloc] initWithFrame:_menuScroll.bounds for:JHImage_Text colorHandler:^(UIColor *color) {
+        weakSelf.drawColor = color;
+        weakSelf.selectedTextView.fillColor = color;
+    }];
+    [_menuScroll addSubview:board];
+    [self addNewText];
 }
 
 - (void)addNewText
@@ -405,8 +296,11 @@ static NSString* const kCLTextToolAlignRightIconName = @"alignRightIconAssetsNam
 {
     if(_settingView.isFirstResponder){
         [_settingView resignFirstResponder];
+        [self.selectedTextView removeViewBorder:nil];
+        [self hideSettingView];
     }
     else{
+        [self.selectedTextView removeViewBorder:nil];
         [self hideSettingView];
     }
 }
@@ -448,7 +342,7 @@ static NSString* const kCLTextToolAlignRightIconName = @"alignRightIconAssetsNam
 
 
 
-const CGFloat MAX_FONT_SIZE = 50.0;
+const CGFloat MAX_FONT_SIZE = 17.0;
 
 
 #pragma mark- _CLTextView
@@ -457,7 +351,7 @@ const CGFloat MAX_FONT_SIZE = 50.0;
 {
     CLTextLabel *_label;
     UIButton *_deleteButton;
-    CLCircleView *_circleView;
+    UIImageView *_circleView;
     
     CGFloat _scale;
     CGFloat _arg;
@@ -465,6 +359,7 @@ const CGFloat MAX_FONT_SIZE = 50.0;
     CGPoint _initialPoint;
     CGFloat _initialArg;
     CGFloat _initialScale;
+    CAShapeLayer *_labelBorder;
 }
 
 + (void)setActiveTextView:(_CLTextView*)view
@@ -481,7 +376,31 @@ const CGFloat MAX_FONT_SIZE = 50.0;
         [[NSNotificationCenter defaultCenter] performSelectorOnMainThread:@selector(postNotification:) withObject:n waitUntilDone:NO];
     }
 }
+-(void)addViewBorder:(UIView *)view
+{
+    _labelBorder = [CAShapeLayer layer];
+    UIColor *grayColor = [UIColor colorWithRed:221.0f/255.0f green:221.0f/255.0f blue:221.0f/255.0f alpha:1.0f];
+    _labelBorder.strokeColor = grayColor.CGColor;
+    _labelBorder.fillColor = nil;
+    _labelBorder.path = [UIBezierPath bezierPathWithRect:view.bounds].CGPath;
+    _labelBorder.frame = view.bounds;
+    _labelBorder.lineWidth = .5;
+    _labelBorder.lineCap = @"square";
+    _labelBorder.lineDashPattern = @[@1, @2];
+    [view.layer addSublayer:_labelBorder];
+}
 
+-(void)removeViewBorder:(UIView *)view
+{
+    if (!view) view = _label;
+    [view.layer.sublayers enumerateObjectsUsingBlock:^(CALayer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (obj == _labelBorder) {
+            *stop = YES;
+            [_labelBorder removeFromSuperlayer];
+        }
+    }];
+    
+}
 - (id)initWithTool:(CLTextTool*)tool
 {
     self = [super initWithFrame:CGRectMake(0, 0, 132, 132)];
@@ -490,8 +409,7 @@ const CGFloat MAX_FONT_SIZE = 50.0;
         [_label setTextColor:[CLImageEditorTheme toolbarTextColor]];
         _label.numberOfLines = 0;
         _label.backgroundColor = [UIColor clearColor];
-        _label.layer.borderColor = [[UIColor blackColor] CGColor];
-        _label.layer.cornerRadius = 3;
+        _label.layer.borderColor = [[UIColor clearColor] CGColor];
         _label.font = [UIFont systemFontOfSize:MAX_FONT_SIZE];
         _label.minimumScaleFactor = 1/MAX_FONT_SIZE;
         _label.adjustsFontSizeToFitWidth = YES;
@@ -504,27 +422,31 @@ const CGFloat MAX_FONT_SIZE = 50.0;
         self.frame = CGRectMake(0, 0, size.width + 32, size.height + 32);
         
         _deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_deleteButton setImage:[tool imageForKey:kCLTextToolDeleteIconName defaultImageName:@"btn_delete.png"] forState:UIControlStateNormal];
+        [_deleteButton setImage:[UIImage imageNamed:@"textDel"] forState:UIControlStateNormal];
         _deleteButton.frame = CGRectMake(0, 0, 32, 32);
         _deleteButton.center = _label.frame.origin;
         [_deleteButton addTarget:self action:@selector(pushedDeleteBtn:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_deleteButton];
         
-        _circleView = [[CLCircleView alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];
+        _circleView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
+        _circleView.userInteractionEnabled = YES;
+        _circleView.image = [UIImage imageNamed:@"controlhandler"];
         _circleView.center = CGPointMake(_label.width + _label.left, _label.height + _label.top);
         _circleView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin;
-        _circleView.radius = 0.7;
-        _circleView.color = [UIColor whiteColor];
-        _circleView.borderColor = [UIColor blackColor];
-        _circleView.borderWidth = 5;
         [self addSubview:_circleView];
         
         _arg = 0;
         [self setScale:1];
         
         [self initGestures];
+        [self performSelector:@selector(delayRefreshView) withObject:nil afterDelay:.3];
     }
     return self;
+}
+
+-(void)delayRefreshView
+{
+    [self addViewBorder:_label];
 }
 
 - (void)initGestures
@@ -565,7 +487,8 @@ const CGFloat MAX_FONT_SIZE = 50.0;
     
     CGSize size = [_label sizeThatFits:CGSizeMake(width / (15/MAX_FONT_SIZE), FLT_MAX)];
     _label.frame = CGRectMake(16, 16, size.width, size.height);
-    
+    [self removeViewBorder:_label];
+    [self addViewBorder:_label];
     CGFloat viewW = (_label.width + 32);
     CGFloat viewH = _label.font.lineHeight;
     
@@ -603,6 +526,7 @@ const CGFloat MAX_FONT_SIZE = 50.0;
 
 - (UIColor*)fillColor
 {
+    return [UIColor whiteColor];
     return _label.textColor;
 }
 
@@ -650,7 +574,7 @@ const CGFloat MAX_FONT_SIZE = 50.0;
 {
     if(![text isEqualToString:_text]){
         _text = text;
-        _label.text = (_text.length>0) ? _text : [CLImageEditorTheme localizedString:@"CLTextTool_EmptyText" withDefault:@"Text"];
+        _label.text = (_text.length>0) ? _text : @"点击输入文字";
     }
 }
 
