@@ -40,7 +40,7 @@ static NSString* const kCLTextToolAlignRightIconName = @"alignRightIconAssetsNam
 - (id)initWithTool:(CLTextTool*)tool;
 - (void)setScale:(CGFloat)scale;
 - (void)sizeToFitWithMaxWidth:(CGFloat)width lineHeight:(CGFloat)lineHeight;
--(void)removeViewBorder:(UIView *)view;
+-(void)removeViewBorder;
 
 @end
 
@@ -175,7 +175,7 @@ static NSString* const kCLTextToolAlignRightIconName = @"alignRightIconAssetsNam
 - (void)executeWithCompletionBlock:(void (^)(UIImage *, NSError *, NSDictionary *))completionBlock
 {
     [_CLTextView setActiveTextView:nil];
-    
+    [self.selectedTextView removeViewBorder];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         UIImage *image = [self buildImage:self->_originalImage];
         
@@ -296,11 +296,9 @@ static NSString* const kCLTextToolAlignRightIconName = @"alignRightIconAssetsNam
 {
     if(_settingView.isFirstResponder){
         [_settingView resignFirstResponder];
-        [self.selectedTextView removeViewBorder:nil];
         [self hideSettingView];
     }
     else{
-        [self.selectedTextView removeViewBorder:nil];
         [self hideSettingView];
     }
 }
@@ -334,8 +332,8 @@ static NSString* const kCLTextToolAlignRightIconName = @"alignRightIconAssetsNam
 
 - (void)textSettingView:(CLTextSettingView *)settingView didChangeFont:(UIFont *)font
 {
-    self.selectedTextView.font = font;
-    [self.selectedTextView sizeToFitWithMaxWidth:0.8*_workingView.width lineHeight:0.2*_workingView.height];
+//    self.selectedTextView.font = font;
+//    [self.selectedTextView sizeToFitWithMaxWidth:0.8*_workingView.width lineHeight:0.2*_workingView.height];
 }
 
 @end
@@ -359,7 +357,7 @@ const CGFloat MAX_FONT_SIZE = 17.0;
     CGPoint _initialPoint;
     CGFloat _initialArg;
     CGFloat _initialScale;
-    CAShapeLayer *_labelBorder;
+    CAShapeLayer *_cLTextBorder;
 }
 
 + (void)setActiveTextView:(_CLTextView*)view
@@ -376,31 +374,7 @@ const CGFloat MAX_FONT_SIZE = 17.0;
         [[NSNotificationCenter defaultCenter] performSelectorOnMainThread:@selector(postNotification:) withObject:n waitUntilDone:NO];
     }
 }
--(void)addViewBorder:(UIView *)view
-{
-    _labelBorder = [CAShapeLayer layer];
-    UIColor *grayColor = [UIColor colorWithRed:221.0f/255.0f green:221.0f/255.0f blue:221.0f/255.0f alpha:1.0f];
-    _labelBorder.strokeColor = grayColor.CGColor;
-    _labelBorder.fillColor = nil;
-    _labelBorder.path = [UIBezierPath bezierPathWithRect:view.bounds].CGPath;
-    _labelBorder.frame = view.bounds;
-    _labelBorder.lineWidth = .5;
-    _labelBorder.lineCap = @"square";
-    _labelBorder.lineDashPattern = @[@1, @2];
-    [view.layer addSublayer:_labelBorder];
-}
 
--(void)removeViewBorder:(UIView *)view
-{
-    if (!view) view = _label;
-    [view.layer.sublayers enumerateObjectsUsingBlock:^(CALayer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (obj == _labelBorder) {
-            *stop = YES;
-            [_labelBorder removeFromSuperlayer];
-        }
-    }];
-    
-}
 - (id)initWithTool:(CLTextTool*)tool
 {
     self = [super initWithFrame:CGRectMake(0, 0, 132, 132)];
@@ -423,30 +397,26 @@ const CGFloat MAX_FONT_SIZE = 17.0;
         
         _deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_deleteButton setImage:[UIImage imageNamed:@"textDel"] forState:UIControlStateNormal];
-        _deleteButton.frame = CGRectMake(0, 0, 32, 32);
-        _deleteButton.center = _label.frame.origin;
+        _deleteButton.frame = CGRectMake(-8, -8, 32, 32);
         [_deleteButton addTarget:self action:@selector(pushedDeleteBtn:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_deleteButton];
         
         _circleView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
         _circleView.userInteractionEnabled = YES;
         _circleView.image = [UIImage imageNamed:@"controlhandler"];
-        _circleView.center = CGPointMake(_label.width + _label.left, _label.height + _label.top);
+        _circleView.center = CGPointMake(_label.width + _label.left + 8, _label.height + _label.top + 8);
         _circleView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin;
         [self addSubview:_circleView];
         
+        //初始化角度/缩放比例
         _arg = 0;
         [self setScale:1];
         
         [self initGestures];
+        //添加虚线边框
         [self performSelector:@selector(delayRefreshView) withObject:nil afterDelay:.3];
     }
     return self;
-}
-
--(void)delayRefreshView
-{
-    [self addViewBorder:_label];
 }
 
 - (void)initGestures
@@ -487,8 +457,8 @@ const CGFloat MAX_FONT_SIZE = 17.0;
     
     CGSize size = [_label sizeThatFits:CGSizeMake(width / (15/MAX_FONT_SIZE), FLT_MAX)];
     _label.frame = CGRectMake(16, 16, size.width, size.height);
-    [self removeViewBorder:_label];
-    [self addViewBorder:_label];
+    [self removeViewBorder];
+    [self addViewBorder];
     CGFloat viewW = (_label.width + 32);
     CGFloat viewH = _label.font.lineHeight;
     
@@ -498,6 +468,8 @@ const CGFloat MAX_FONT_SIZE = 17.0;
 
 - (void)setScale:(CGFloat)scale
 {
+    if(scale < .5) scale = .5;
+    if(scale > 4) scale = 4;
     _scale = scale;
     
     self.transform = CGAffineTransformIdentity;
@@ -512,7 +484,6 @@ const CGFloat MAX_FONT_SIZE = 17.0;
     self.frame = rct;
     
     _label.center = CGPointMake(rct.size.width/2, rct.size.height/2);
-    
     self.transform = CGAffineTransformMakeRotation(_arg);
     
     _label.layer.borderWidth = 1/_scale;
@@ -550,15 +521,15 @@ const CGFloat MAX_FONT_SIZE = 17.0;
     return _label.outlineWidth;
 }
 
-- (void)setFont:(UIFont *)font
-{
-    _label.font = [font fontWithSize:MAX_FONT_SIZE];
-}
-
-- (UIFont*)font
-{
-    return _label.font;
-}
+//- (void)setFont:(UIFont *)font
+//{
+//    _label.font = [font fontWithSize:MAX_FONT_SIZE];
+//}
+//
+//- (UIFont*)font
+//{
+//    return _label.font;
+//}
 
 - (void)setTextAlignment:(NSTextAlignment)textAlignment
 {
@@ -651,7 +622,42 @@ const CGFloat MAX_FONT_SIZE = 17.0;
     CGFloat arg = atan2(p.y, p.x);
     
     _arg   = _initialArg + arg - tmpA;
-    [self setScale:MAX(_initialScale * R / tmpR, 15/MAX_FONT_SIZE)];
+    [self setScale:MAX(_initialScale * R / tmpR, 3/MAX_FONT_SIZE)];
+}
+
+
+#pragma mark - 虚线框
+//初始化
+-(void)delayRefreshView
+{
+    [self addViewBorder];
+}
+-(void)addViewBorder
+{
+    _cLTextBorder = [CAShapeLayer layer];
+    UIColor *grayColor = [UIColor colorWithRed:221.0f/255.0f green:221.0f/255.0f blue:221.0f/255.0f alpha:1.0f];
+    _cLTextBorder.strokeColor = grayColor.CGColor;
+    _cLTextBorder.fillColor = nil;
+    CGRect rect = CGRectMake(_label.bounds.origin.x - 2,
+                             _label.bounds.origin.y - 2,
+                             _label.bounds.size.width + 8,
+                             _label.bounds.size.height + 8);
+    _cLTextBorder.path = [UIBezierPath bezierPathWithRect:rect].CGPath;
+    _cLTextBorder.frame = rect;
+    _cLTextBorder.lineWidth = .5;
+    _cLTextBorder.lineCap = @"square";
+    _cLTextBorder.lineDashPattern = @[@1, @2];
+    [_label.layer addSublayer:_cLTextBorder];
+}
+
+-(void)removeViewBorder
+{
+    [_label.layer.sublayers enumerateObjectsUsingBlock:^(CALayer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (obj == _cLTextBorder) {
+            *stop = YES;
+            [_cLTextBorder removeFromSuperlayer];
+        }
+    }];
 }
 
 @end

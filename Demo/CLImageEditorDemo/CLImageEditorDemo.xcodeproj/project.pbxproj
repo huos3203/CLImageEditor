@@ -63,6 +63,8 @@
 		84A0B1C422B36F4C00E10D46 /* JHColorBoardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A0B1C122B36F4C00E10D46 /* JHColorBoardView.m */; };
 		84A4EB7522B2221A004C3FC2 /* CLImageEditorSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 849BAAE722B2030B0028D888 /* CLImageEditorSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		84A4EB7822B22365004C3FC2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5C1E1918350DC400790989 /* ViewController.m */; };
+		84ADFCC722B4D9E600D7153C /* UIView+DotlineBorder.h in Headers */ = {isa = PBXBuildFile; fileRef = 84ADFCC522B4D9E600D7153C /* UIView+DotlineBorder.h */; };
+		84ADFCC822B4D9E600D7153C /* UIView+DotlineBorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ADFCC622B4D9E600D7153C /* UIView+DotlineBorder.m */; };
 		84B32F7A22B3AB2D00EA1E73 /* CLTextTool.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A033F1897528000347C57 /* CLTextTool.m */; };
 		84E50EBE22B225C10041A381 /* libCLImageEditorSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 849BAAE522B2030B0028D888 /* libCLImageEditorSDK.a */; };
 		84E581A722B2299700EC25B1 /* CLImageEditorSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = 849BAAE822B2030B0028D888 /* CLImageEditorSDK.m */; };
@@ -108,6 +110,8 @@
 		849BAAE822B2030B0028D888 /* CLImageEditorSDK.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CLImageEditorSDK.m; sourceTree = "<group>"; };
 		84A0B1C022B36F4C00E10D46 /* JHColorBoardView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JHColorBoardView.h; sourceTree = "<group>"; };
 		84A0B1C122B36F4C00E10D46 /* JHColorBoardView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JHColorBoardView.m; sourceTree = "<group>"; };
+		84ADFCC522B4D9E600D7153C /* UIView+DotlineBorder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+DotlineBorder.h"; sourceTree = "<group>"; };
+		84ADFCC622B4D9E600D7153C /* UIView+DotlineBorder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+DotlineBorder.m"; sourceTree = "<group>"; };
 		AD13E67C1850F7C8009B12AD /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		AD1D2C691897538900752339 /* CLGPUImageVignetteFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLGPUImageVignetteFilter.h; path = CLGPUImageFilters/CLGPUImageVignetteFilter.h; sourceTree = "<group>"; };
 		AD1D2C6A1897538900752339 /* CLGPUImageVignetteFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLGPUImageVignetteFilter.m; path = CLGPUImageFilters/CLGPUImageVignetteFilter.m; sourceTree = "<group>"; };
@@ -256,6 +260,17 @@
 				849BAAE822B2030B0028D888 /* CLImageEditorSDK.m */,
 			);
 			path = CLImageEditorSDK;
+			sourceTree = "<group>";
+		};
+		84ADFCC422B4D94100D7153C /* JH */ = {
+			isa = PBXGroup;
+			children = (
+				84A0B1C022B36F4C00E10D46 /* JHColorBoardView.h */,
+				84A0B1C122B36F4C00E10D46 /* JHColorBoardView.m */,
+				84ADFCC522B4D9E600D7153C /* UIView+DotlineBorder.h */,
+				84ADFCC622B4D9E600D7153C /* UIView+DotlineBorder.m */,
+			);
+			path = JH;
 			sourceTree = "<group>";
 		};
 		AD1D2C681897532100752339 /* CLGPUImageFilters */ = {
@@ -435,6 +450,7 @@
 		AD5A031D1897528000347C57 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				84ADFCC422B4D94100D7153C /* JH */,
 				AD5A031E1897528000347C57 /* CLClassList.h */,
 				AD5A031F1897528000347C57 /* CLClassList.m */,
 				AD5A03201897528000347C57 /* CLSplineInterpolator.h */,
@@ -445,8 +461,6 @@
 				AD5A03251897528000347C57 /* UIImage+Utility.m */,
 				AD5A03261897528000347C57 /* UIView+Frame.h */,
 				AD5A03271897528000347C57 /* UIView+Frame.m */,
-				84A0B1C022B36F4C00E10D46 /* JHColorBoardView.h */,
-				84A0B1C122B36F4C00E10D46 /* JHColorBoardView.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -591,6 +605,7 @@
 			files = (
 				84A0B1C222B36F4C00E10D46 /* JHColorBoardView.h in Headers */,
 				84A4EB7522B2221A004C3FC2 /* CLImageEditorSDK.h in Headers */,
+				84ADFCC722B4D9E600D7153C /* UIView+DotlineBorder.h in Headers */,
 				8451E2DE22B242E9002888B3 /* CLImageToolInfo+Private.h in Headers */,
 				848BB43C22B251A200D35811 /* JHImageEditorViewController.h in Headers */,
 			);
@@ -700,6 +715,7 @@
 				849BAAFA22B21F380028D888 /* CLImageToolBase.m in Sources */,
 				849BAAFB22B21F380028D888 /* CLAdjustmentTool.m in Sources */,
 				849BAAFC22B21F380028D888 /* CLBlurTool.m in Sources */,
+				84ADFCC822B4D9E600D7153C /* UIView+DotlineBorder.m in Sources */,
 				849BAAFD22B21F380028D888 /* CLClippingTool.m in Sources */,
 				849BAAFE22B21F380028D888 /* CLDrawTool.m in Sources */,
 				849BAAFF22B21F380028D888 /* CLBloomEffect.m in Sources */,
