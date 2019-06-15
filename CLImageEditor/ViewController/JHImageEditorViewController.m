@@ -146,7 +146,6 @@ static const CGFloat kMenuBarHeight = 60.0f;
 
 - (void)initMenuScrollView
 {
-    UIEdgeInsets theInsets = [UIApplication sharedApplication].keyWindow.rootViewController.view.safeAreaInsets;
     if(self.menuView==nil){
         UIScrollView *menuScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, kMenuBarHeight)];
         
@@ -157,6 +156,10 @@ static const CGFloat kMenuBarHeight = 60.0f;
         
         [self.view addSubview:menuScroll];
         self.menuView = menuScroll;
+        UIEdgeInsets theInsets;
+        if (@available(iOS 11.0, *)) {
+            theInsets = [UIApplication sharedApplication].keyWindow.rootViewController.view.safeAreaInsets;
+        }
         [JHImageEditorViewController setConstraintsLeading:@0 trailing:@0 top:nil bottom:@(-kNavBarHeight-theInsets.bottom-5) height:@(menuScroll.height) width:nil parent:self.view child:menuScroll peer:nil];
     }
     self.menuView.backgroundColor = [CLImageEditorTheme toolbarColor];
