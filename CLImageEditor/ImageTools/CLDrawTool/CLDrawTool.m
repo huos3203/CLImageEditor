@@ -108,7 +108,8 @@ static NSString* const kCLDrawToolEraserIconName = @"eraserIconAssetsName";
     [_drawingView removeFromSuperview];
     self.editor.imageView.userInteractionEnabled = NO;
     self.editor.scrollView.panGestureRecognizer.minimumNumberOfTouches = 1;
-    
+    [_redo removeFromSuperview];
+    [_undo removeFromSuperview];
     [UIView animateWithDuration:kCLImageToolAnimationDuration
                      animations:^{
                          self->_menuView.transform = CGAffineTransformMakeTranslation(0, self.editor.view.height-self->_menuView.top);
@@ -149,7 +150,7 @@ static NSString* const kCLDrawToolEraserIconName = @"eraserIconAssetsName";
     [_undo setImage:[UIImage imageNamed:@"undoPre2"] forState:UIControlStateSelected];
     [_redo setImage:[UIImage imageNamed:@"redoPre"] forState:UIControlStateNormal];
     [_redo setImage:[UIImage imageNamed:@"redoPre2"] forState:UIControlStateSelected];
-    CGFloat reX = [UIScreen mainScreen].bounds.size.width - 22;
+    CGFloat reX = [UIScreen mainScreen].bounds.size.width - 16;
     CGFloat reY = _menuView.frame.origin.y - 40;
     _redo.center = CGPointMake(reX, reY);
     _undo.center = CGPointMake(reX - 50, reY);
