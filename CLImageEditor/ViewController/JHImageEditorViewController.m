@@ -146,6 +146,7 @@ static const CGFloat kMenuBarHeight = 60.0f;
 
 - (void)initMenuScrollView
 {
+    UIEdgeInsets theInsets = [UIApplication sharedApplication].keyWindow.rootViewController.view.safeAreaInsets;
     if(self.menuView==nil){
         UIScrollView *menuScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, kMenuBarHeight)];
         
@@ -156,21 +157,22 @@ static const CGFloat kMenuBarHeight = 60.0f;
         
         [self.view addSubview:menuScroll];
         self.menuView = menuScroll;
-        [JHImageEditorViewController setConstraintsLeading:@0 trailing:@0 top:nil bottom:@(-kNavBarHeight) height:@(menuScroll.height) width:nil parent:self.view child:menuScroll peer:nil];
+        [JHImageEditorViewController setConstraintsLeading:@0 trailing:@0 top:nil bottom:@(-kNavBarHeight-theInsets.bottom-5) height:@(menuScroll.height) width:nil parent:self.view child:menuScroll peer:nil];
     }
     self.menuView.backgroundColor = [CLImageEditorTheme toolbarColor];
 }
 
 -(void)installMenuToolBar
 {
+    UIEdgeInsets theInsets;
     if (@available(iOS 11.0, *)) {
-        UIEdgeInsets theInsets = [UIApplication sharedApplication].keyWindow.rootViewController.view.safeAreaInsets;
+        theInsets = [UIApplication sharedApplication].keyWindow.rootViewController.view.safeAreaInsets;
         self.menuToolBar.height += theInsets.bottom;
     }
     self.menuToolBar.bottom = self.view.height - self.menuToolBar.height;
     self.menuToolBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
     [self.view addSubview:self.menuToolBar];
-    [JHImageEditorViewController setConstraintsLeading:@-10 trailing:@10 top:nil bottom:@-5 height:@(kNavBarHeight) width:nil parent:self.view child:self.menuToolBar peer:nil];
+    [JHImageEditorViewController setConstraintsLeading:@-10 trailing:@10 top:nil bottom:@(-theInsets.bottom-5) height:@(kNavBarHeight) width:nil parent:self.view child:self.menuToolBar peer:nil];
     
 }
 
@@ -182,7 +184,7 @@ static const CGFloat kMenuBarHeight = 60.0f;
         imageScroll.showsHorizontalScrollIndicator = NO;
         imageScroll.showsVerticalScrollIndicator = NO;
         imageScroll.delegate = self;
-        imageScroll.clipsToBounds = NO;
+//        imageScroll.clipsToBounds = NO;
         
         CGFloat y = 0;
         if(self.navigationController){
