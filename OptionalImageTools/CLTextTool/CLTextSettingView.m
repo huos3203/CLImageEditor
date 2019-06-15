@@ -99,6 +99,13 @@
     _textView.font = [UIFont systemFontOfSize:14];
     _textView.backgroundColor = [UIColor clearColor];
     [_scrollView addSubview:_textView];
+    UIButton *clearBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 16, 16)];
+    CGFloat cx = _textView.frame.origin.x + _textView.bounds.size.width - 13;
+    CGFloat cy = _textView.center.y - 3;
+    clearBtn.center = CGPointMake(cx, cy);
+    [clearBtn setImage:[UIImage imageNamed:@"textviewdel"] forState:UIControlStateNormal];
+    [clearBtn addTarget:self action:@selector(cleanTextView) forControlEvents:UIControlEventTouchUpInside];
+    [_scrollView addSubview:clearBtn];
     
     _colorPanel = [[UIView alloc] initWithFrame:CGRectMake(self.width, 0, self.width, self.height)];
     _colorPanel.backgroundColor = [UIColor clearColor];
@@ -318,4 +325,13 @@
     }
 }
 
+
+#pragma mark - 清除文本
+-(void)cleanTextView
+{
+    _textView.text = @"";
+    if([self.delegate respondsToSelector:@selector(textSettingView:didChangeText:)]){
+        [self.delegate textSettingView:self didChangeText:@""];
+    }
+}
 @end
