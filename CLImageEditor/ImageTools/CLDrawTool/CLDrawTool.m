@@ -29,6 +29,12 @@ static NSString* const kCLDrawToolEraserIconName = @"eraserIconAssetsName";
     UIImageView *_eraserIcon;
     
     CLToolbarMenuItem *_colorBtn;
+    
+    //存储每一张图片
+    NSMutableArray *_lineArray;
+    NSMutableArray *_undoLines;
+    UIButton *_undo;
+    UIButton *_redo;
 }
 
 + (NSArray*)subtools
@@ -92,6 +98,9 @@ static NSString* const kCLDrawToolEraserIconName = @"eraserIconAssetsName";
                          self->_menuView.transform = CGAffineTransformIdentity;
                      }];
     
+    //存储:撤销/重做画笔
+    _lineArray = [NSMutableArray new];
+    _undoLines = [NSMutableArray new];
 }
 
 - (void)cleanup
@@ -131,6 +140,23 @@ static NSString* const kCLDrawToolEraserIconName = @"eraserIconAssetsName";
         weakSelf.drawColor = color;
     }];
     [_menuView addSubview:board];
+    
+    _undo = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 22)];
+    _redo = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 22)];
+    _undo.selected = YES;
+    _redo.selected = YES;
+    [_undo setImage:[UIImage imageNamed:@"undoPre"] forState:UIControlStateNormal];
+    [_undo setImage:[UIImage imageNamed:@"undoPre2"] forState:UIControlStateSelected];
+    [_redo setImage:[UIImage imageNamed:@"redoPre"] forState:UIControlStateNormal];
+    [_redo setImage:[UIImage imageNamed:@"redoPre2"] forState:UIControlStateSelected];
+    CGFloat reX = [UIScreen mainScreen].bounds.size.width - 22;
+    CGFloat reY = _menuView.frame.origin.y - 40;
+    _redo.center = CGPointMake(reX, reY);
+    _undo.center = CGPointMake(reX - 50, reY);
+    [_undo addTarget:self action:@selector(unPreDoAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_redo addTarget:self action:@selector(rePreDoAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.editor.view addSubview:_undo];
+    [self.editor.view addSubview:_redo];
 }
 
 - (void)drawingViewDidPan:(UIPanGestureRecognizer*)sender
@@ -139,10 +165,18 @@ static NSString* const kCLDrawToolEraserIconName = @"eraserIconAssetsName";
     
     if(sender.state == UIGestureRecognizerStateBegan){
         _prevDraggingPosition = currentDraggingPosition;
+        //初始化存储一条线的数组
+        NSMutableArray *pointArray = [NSMutableArray arrayWithCapacity:1];
+        [_lineArray addObject:pointArray];
     }
     
     if(sender.state != UIGestureRecognizerStateEnded){
         [self drawLine:_prevDraggingPosition to:currentDraggingPosition];
+        //存储一条线的数组 即:线上的所有点
+        NSMutableArray *pointArray = [_lineArray lastObject];
+        _undo.selected = NO;
+        NSValue *pointValue = [NSValue valueWithCGPoint:currentDraggingPosition];
+        [pointArray addObject:pointValue];
     }
     _prevDraggingPosition = currentDraggingPosition;
 }
@@ -189,4 +223,84 @@ static NSString* const kCLDrawToolEraserIconName = @"eraserIconAssetsName";
     return tmp;
 }
 
+
+
+#pragma mark - 撤销上一步操作
+//https://blog.csdn.net/lfl18326162160/article/details/77447787
+//撤销
+-(void)unPreDoAction:(UIButton *)undo
+{
+    if(_lineArray.count == 0)return;
+    NSArray *unline = [_lineArray lastObject];
+    [_undoLines addObject:unline];
+    [_lineArray removeLastObject];
+    [self clearLine:unline];
+    [_undo setHighlighted:YES];
+    _redo.selected = _undoLines.count == 0;
+    _undo.selected = _lineArray.count == 0;
+}
+
+//重做
+-(void)rePreDoAction:(UIButton *)redo
+{
+    if(_undoLines.count == 0)return;
+    NSArray *reline = [_undoLines lastObject];
+    [_lineArray addObject:reline];
+    [_undoLines removeLastObject];
+    [self reDrawLine];
+    _redo.selected = _undoLines.count == 0;
+    _undo.selected = _lineArray.count == 0;
+}
+
+-(void)reDrawLine
+{
+    for (int i = 0; i < [_lineArray count]; i++) {
+        NSMutableArray *pointArray = [_lineArray objectAtIndex:i];
+        for (int j = 0; j <(int)pointArray.count - 1; j++) {
+            //拿出小数组之中的两个点
+            NSValue *firstPointValue = [pointArray objectAtIndex:j];
+            NSValue *secondPointValue = [pointArray objectAtIndex:j+1];
+            CGPoint from = [firstPointValue CGPointValue];
+            CGPoint to = [secondPointValue CGPointValue];
+            [self drawLine:from to:to];
+        }
+    }
+}
+
+-(void)clearLine:(NSArray *)pointArray
+{
+    for (int j = 0; j <(int)pointArray.count - 1; j++) {
+        //拿出小数组之中的两个点
+        NSValue *firstPointValue = [pointArray objectAtIndex:j];
+        NSValue *secondPointValue = [pointArray objectAtIndex:j+1];
+        CGPoint from = [firstPointValue CGPointValue];
+        CGPoint to = [secondPointValue CGPointValue];
+        [self clearLine:from to:to];
+    }
+}
+
+-(void)clearLine:(CGPoint)from to:(CGPoint)to
+{
+    CGSize size = _drawingView.frame.size;
+    UIGraphicsBeginImageContextWithOptions(size, NO, 0.0);
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    [_drawingView.image drawAtPoint:CGPointZero];
+    
+    CGFloat strokeWidth = 10;//MAX(1, _widthSlider.value * 65);
+    UIColor *strokeColor = self.drawColor;//_strokePreview.backgroundColor;
+    
+    CGContextSetLineWidth(context, strokeWidth);
+    CGContextSetStrokeColorWithColor(context, strokeColor.CGColor);
+    CGContextSetBlendMode(context, kCGBlendModeClear);
+    
+    CGContextMoveToPoint(context, from.x, from.y);
+    CGContextAddLineToPoint(context, to.x, to.y);
+    CGContextStrokePath(context);
+    
+    _drawingView.image = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+}
 @end
