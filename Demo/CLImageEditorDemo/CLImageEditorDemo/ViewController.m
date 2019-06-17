@@ -94,7 +94,7 @@
         tool01.title = @"文字";
         tool01.available = YES;//如果available设置为no，则从菜单视图中删除。
         tool01.dockedNumber = -1;//置于顶层
-        [self removeOtherBut:editor];
+//        [self removeOtherBut:editor];
         
         [self presentViewController:editor animated:YES completion:nil];
         //[editor showInViewController:self withImageView:_imageView];
@@ -107,6 +107,14 @@
 
 -(void)removeOtherBut:(CLImageEditor *)editor
 {
+    /**两种方式屏蔽
+     第一种:在CLImageToolInfo+Private.m中添加如下代码
+     ```
+     if(![cls isEqualToString:@"CLDrawTool"]
+     && ![cls isEqualToString:@"CLTextTool"]) continue;
+     ```
+     第二种: 如下实现,获取工具实例,然后设置available为NO
+     */
     CLImageToolInfo *tool = [editor.toolInfo subToolInfoWithToolName:@"CLToneCurveTool" recursive:NO];
     tool.available = NO;
     
