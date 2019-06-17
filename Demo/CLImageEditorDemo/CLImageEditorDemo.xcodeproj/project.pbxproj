@@ -65,7 +65,7 @@
 		84A4EB7822B22365004C3FC2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5C1E1918350DC400790989 /* ViewController.m */; };
 		84ADFCC722B4D9E600D7153C /* UIView+DotlineBorder.h in Headers */ = {isa = PBXBuildFile; fileRef = 84ADFCC522B4D9E600D7153C /* UIView+DotlineBorder.h */; };
 		84ADFCC822B4D9E600D7153C /* UIView+DotlineBorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ADFCC622B4D9E600D7153C /* UIView+DotlineBorder.m */; };
-		84B32F7A22B3AB2D00EA1E73 /* CLTextTool.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A033F1897528000347C57 /* CLTextTool.m */; };
+		84E1A02422B790F5004D5C31 /* CLTextTool.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A033F1897528000347C57 /* CLTextTool.m */; };
 		84E50EBE22B225C10041A381 /* libCLImageEditorSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 849BAAE522B2030B0028D888 /* libCLImageEditorSDK.a */; };
 		84E581A722B2299700EC25B1 /* CLImageEditorSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = 849BAAE822B2030B0028D888 /* CLImageEditorSDK.m */; };
 		AD5A03401897528000347C57 /* CLImageEditor.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AD5A02DC1897528000347C57 /* CLImageEditor.bundle */; };
@@ -718,6 +718,7 @@
 				84ADFCC822B4D9E600D7153C /* UIView+DotlineBorder.m in Sources */,
 				849BAAFD22B21F380028D888 /* CLClippingTool.m in Sources */,
 				849BAAFE22B21F380028D888 /* CLDrawTool.m in Sources */,
+				84E1A02422B790F5004D5C31 /* CLTextTool.m in Sources */,
 				849BAAFF22B21F380028D888 /* CLBloomEffect.m in Sources */,
 				849BAB0022B21F380028D888 /* CLGloomEffect.m in Sources */,
 				849BAB0122B21F380028D888 /* CLHighlightShadowEffect.m in Sources */,
@@ -764,7 +765,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				84A4EB7822B22365004C3FC2 /* ViewController.m in Sources */,
-				84B32F7A22B3AB2D00EA1E73 /* CLTextTool.m in Sources */,
 				AD5C1E1018350DC400790989 /* main.m in Sources */,
 				AD5C1E1418350DC400790989 /* AppDelegate.m in Sources */,
 			);

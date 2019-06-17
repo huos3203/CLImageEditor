@@ -19,7 +19,7 @@
 
 - (id)init
 {
-    return [_CLImageEditorViewController new];
+    return [JHImageEditorViewController new];
 }
 
 - (id)initWithImage:(UIImage*)image
@@ -40,7 +40,7 @@
 #pragma mark - 金和模块
 - (id)initWithJHImage:(UIImage*)image
 {
-    return [_CLImageEditorViewController new];
+    return [JHImageEditorViewController new];
 }
 - (id)initWithJHImage:(UIImage*)image delegate:(id<CLImageEditorDelegate>)delegate
 {
