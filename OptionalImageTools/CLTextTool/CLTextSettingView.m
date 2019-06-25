@@ -254,21 +254,7 @@
 {
     CGRect keyboardFrame = [[notificatioin.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     keyboardFrame = [self.superview convertRect:keyboardFrame fromView:self.window];
-    
-    UIViewAnimationCurve animationCurve = [[notificatioin.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] integerValue];
-    double duration = [[notificatioin.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-    
-    [UIView animateWithDuration:duration
-                          delay:0
-                        options:UIViewAnimationOptionBeginFromCurrentState | (animationCurve<<16)
-                     animations:^{
-                         self->_textView.height = height;
-                         CGFloat dy = MIN(0, (keyboardFrame.origin.y - self->_textView.height) - self.top - 20);
-                         self.transform = CGAffineTransformMakeTranslation(0, dy);
-                     } completion:^(BOOL finished) {
-                         
-                     }
-     ];
+    self.top = keyboardFrame.origin.y - self->_textView.height - 14;
 }
 
 #pragma mark- Color picker delegate
