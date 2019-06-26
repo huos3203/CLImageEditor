@@ -30,9 +30,9 @@ static NSString* const kCLDrawToolEraserIconName = @"eraserIconAssetsName";
     
     CLToolbarMenuItem *_colorBtn;
     
-    //存储每一张图片
-    NSMutableArray *_lineArray;
-    NSMutableArray *_undoLines;
+    NSMutableArray *_currentImages;
+    NSMutableArray *_overImages;
+    
     UIButton *_undo;
     UIButton *_redo;
 }
@@ -98,9 +98,9 @@ static NSString* const kCLDrawToolEraserIconName = @"eraserIconAssetsName";
                          self->_menuView.transform = CGAffineTransformIdentity;
                      }];
     
-    //存储:撤销/重做画笔
-    _lineArray = [NSMutableArray new];
-    _undoLines = [NSMutableArray new];
+    _currentImages = [NSMutableArray new];
+    _overImages = [NSMutableArray new];
+
 }
 
 - (void)cleanup
@@ -166,18 +166,16 @@ static NSString* const kCLDrawToolEraserIconName = @"eraserIconAssetsName";
     
     if(sender.state == UIGestureRecognizerStateBegan){
         _prevDraggingPosition = currentDraggingPosition;
-        //初始化存储一条线的数组
-        NSMutableArray *pointArray = [NSMutableArray arrayWithCapacity:1];
-        [_lineArray addObject:pointArray];
     }
     
     if(sender.state != UIGestureRecognizerStateEnded){
         [self drawLine:_prevDraggingPosition to:currentDraggingPosition];
         //存储一条线的数组 即:线上的所有点
-        NSMutableArray *pointArray = [_lineArray lastObject];
         _undo.selected = NO;
-        NSValue *pointValue = [NSValue valueWithCGPoint:currentDraggingPosition];
-        [pointArray addObject:pointValue];
+        
+    }
+    if (sender.state == UIGestureRecognizerStateEnded) {
+        [_currentImages addObject:_drawingView.image];
     }
     _prevDraggingPosition = currentDraggingPosition;
 }
@@ -227,57 +225,30 @@ static NSString* const kCLDrawToolEraserIconName = @"eraserIconAssetsName";
 
 
 #pragma mark - 撤销上一步操作
-//https://blog.csdn.net/lfl18326162160/article/details/77447787
 //撤销
 -(void)unPreDoAction:(UIButton *)undo
 {
-    if(_lineArray.count == 0)return;
-    NSArray *unline = [_lineArray lastObject];
-    [_undoLines addObject:unline];
-    [_lineArray removeLastObject];
-    [self clearLine:unline];
+    if(_currentImages.count == 0)return;
+    NSArray *unline = [_currentImages lastObject];
+    [_overImages addObject:unline];
+    [_currentImages removeLastObject];
+    _drawingView.image = [_currentImages lastObject];
     [_undo setHighlighted:YES];
-    _redo.selected = _undoLines.count == 0;
-    _undo.selected = _lineArray.count == 0;
+    _redo.selected = _overImages.count == 0;
+    _undo.selected = _currentImages.count == 0;
 }
 
 //重做
 -(void)rePreDoAction:(UIButton *)redo
 {
-    if(_undoLines.count == 0)return;
-    NSArray *reline = [_undoLines lastObject];
-    [_lineArray addObject:reline];
-    [_undoLines removeLastObject];
-    [self reDrawLine];
-    _redo.selected = _undoLines.count == 0;
-    _undo.selected = _lineArray.count == 0;
-}
+    if(_overImages.count == 0)return;
+    NSArray *reline = [_overImages lastObject];
+    [_currentImages addObject:reline];
+    [_overImages removeLastObject];
+    _drawingView.image = [_currentImages lastObject];
+    _redo.selected = _overImages.count == 0;
+    _undo.selected = _currentImages.count == 0;
 
--(void)reDrawLine
-{
-    for (int i = 0; i < [_lineArray count]; i++) {
-        NSMutableArray *pointArray = [_lineArray objectAtIndex:i];
-        for (int j = 0; j <(int)pointArray.count - 1; j++) {
-            //拿出小数组之中的两个点
-            NSValue *firstPointValue = [pointArray objectAtIndex:j];
-            NSValue *secondPointValue = [pointArray objectAtIndex:j+1];
-            CGPoint from = [firstPointValue CGPointValue];
-            CGPoint to = [secondPointValue CGPointValue];
-            [self drawLine:from to:to];
-        }
-    }
-}
-
--(void)clearLine:(NSArray *)pointArray
-{
-    for (int j = 0; j <(int)pointArray.count - 1; j++) {
-        //拿出小数组之中的两个点
-        NSValue *firstPointValue = [pointArray objectAtIndex:j];
-        NSValue *secondPointValue = [pointArray objectAtIndex:j+1];
-        CGPoint from = [firstPointValue CGPointValue];
-        CGPoint to = [secondPointValue CGPointValue];
-        [self clearLine:from to:to];
-    }
 }
 
 -(void)clearLine:(CGPoint)from to:(CGPoint)to
