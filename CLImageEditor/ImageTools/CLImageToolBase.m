@@ -80,6 +80,7 @@
 
 - (UIImage*)imageForKey:(NSString*)key defaultImageName:(NSString*)defaultImageName
 {
+    //[UIScreen mainScreen].scale
     NSString *iconName = self.toolInfo.optionalInfo[key];
     
     if(iconName.length>0){
@@ -90,4 +91,11 @@
     }
 }
 
+- (UIImage*)imageForJHName:(NSString*)name
+{
+    int scale = [UIScreen mainScreen].scale;
+    NSString *path = [NSString stringWithFormat:@"CLImageEditor.bundle/JH/%@@%dx.png",name,scale];
+    UIImage *img = [UIImage imageNamed:path];
+    return img;
+}
 @end
