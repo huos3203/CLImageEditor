@@ -137,7 +137,7 @@ static NSString* const kCLTextToolAlignRightIconName = @"alignRightIconAssetsNam
     [self.editor.view addSubview:_settingView];
     
     UIButton *okButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [okButton setImage:[UIImage imageNamed:@"textOK"] forState:UIControlStateNormal];
+    [okButton setImage:[self imageForJHName:@"textOK"] forState:UIControlStateNormal];
     okButton.frame = CGRectMake(_settingView.width-40, 8, 32, 32);
     [okButton addTarget:self action:@selector(pushedButton:) forControlEvents:UIControlEventTouchUpInside];
     [_settingView addSubview:okButton];
@@ -396,14 +396,14 @@ const CGFloat MAX_FONT_SIZE = 17.0;
         self.frame = CGRectMake(0, 0, size.width + 32, size.height + 32);
         
         _deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_deleteButton setImage:[UIImage imageNamed:@"textDel"] forState:UIControlStateNormal];
+        [_deleteButton setImage:[tool imageForJHName:@"textDel"] forState:UIControlStateNormal];
         _deleteButton.frame = CGRectMake(-8, -8, 32, 32);
         [_deleteButton addTarget:self action:@selector(pushedDeleteBtn:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_deleteButton];
         
         _circleView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
         _circleView.userInteractionEnabled = YES;
-        _circleView.image = [UIImage imageNamed:@"controlhandler"];
+        _circleView.image = [tool imageForJHName:@"controlhandler"];
         _circleView.center = CGPointMake(_label.width + _label.left + 8, _label.height + _label.top + 8);
         _circleView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin;
         [self addSubview:_circleView];

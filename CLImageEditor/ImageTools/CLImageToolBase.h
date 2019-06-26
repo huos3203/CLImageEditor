@@ -30,5 +30,6 @@ static const CGFloat kCLImageToolFadeoutDuration   = 0.2;
 - (void)executeWithCompletionBlock:(void(^)(UIImage *image, NSError *error, NSDictionary *userInfo))completionBlock;
 
 - (UIImage*)imageForKey:(NSString*)key defaultImageName:(NSString*)defaultImageName;
+- (UIImage*)imageForJHName:(NSString*)name;
 
 @end

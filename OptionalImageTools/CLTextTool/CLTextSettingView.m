@@ -12,6 +12,7 @@
 #import "CLColorPickerView.h"
 #import "CLFontPickerView.h"
 #import "CLCircleView.h"
+#import "CLImageToolBase.h"
 
 @interface CLTextSettingView()
 <CLColorPickerViewDelegate, CLFontPickerViewDelegate, UITextViewDelegate>
@@ -103,7 +104,8 @@
     CGFloat cx = _textView.frame.origin.x + _textView.bounds.size.width - 13;
     CGFloat cy = _textView.center.y - 3;
     clearBtn.center = CGPointMake(cx, cy);
-    [clearBtn setImage:[UIImage imageNamed:@"textviewdel"] forState:UIControlStateNormal];
+    
+    [clearBtn setImage:[[CLImageToolBase new] imageForJHName:@"textviewdel"] forState:UIControlStateNormal];
     [clearBtn addTarget:self action:@selector(cleanTextView) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:clearBtn];
     

@@ -785,9 +785,9 @@ static const CGFloat kMenuBarHeight = 60.0f;
     
     if(self.currentTool){
         self.titleItem.title = self.currentTool.toolInfo.title;
-        self.confirmBtn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Done"] style:UIBarButtonItemStylePlain target:self action:@selector(pushedDoneBtn:)];
+        self.confirmBtn = [[UIBarButtonItem alloc] initWithImage:[self.currentTool imageForJHName:@"Done"] style:UIBarButtonItemStylePlain target:self action:@selector(pushedDoneBtn:)];
         self.confirmBtn.tintColor = [UIColor whiteColor];
-        self.cancelBtn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"imgCancel"] style:UIBarButtonItemStylePlain target:self action:@selector(pushedCancelBtn:)];
+        self.cancelBtn = [[UIBarButtonItem alloc] initWithImage:[self.currentTool imageForJHName:@"imgCancel"] style:UIBarButtonItemStylePlain target:self action:@selector(pushedCancelBtn:)];
         self.cancelBtn.tintColor = [UIColor whiteColor];
         [self reloadMenuToolBar];
     }

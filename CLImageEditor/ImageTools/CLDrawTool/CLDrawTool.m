@@ -146,10 +146,10 @@ static NSString* const kCLDrawToolEraserIconName = @"eraserIconAssetsName";
     _redo = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 22)];
     _undo.selected = YES;
     _redo.selected = YES;
-    [_undo setImage:[UIImage imageNamed:@"undoPre"] forState:UIControlStateNormal];
-    [_undo setImage:[UIImage imageNamed:@"undoPre2"] forState:UIControlStateSelected];
-    [_redo setImage:[UIImage imageNamed:@"redoPre"] forState:UIControlStateNormal];
-    [_redo setImage:[UIImage imageNamed:@"redoPre2"] forState:UIControlStateSelected];
+    [_undo setImage:[self imageForJHName:@"undoPre"] forState:UIControlStateNormal];
+    [_undo setImage:[self imageForJHName:@"undoPre2"] forState:UIControlStateSelected];
+    [_redo setImage:[self imageForJHName:@"redoPre"] forState:UIControlStateNormal];
+    [_redo setImage:[self imageForJHName:@"redoPre2"] forState:UIControlStateSelected];
     CGFloat reX = [UIScreen mainScreen].bounds.size.width - 16;
     CGFloat reY = _menuView.frame.origin.y - 40;
     _redo.center = CGPointMake(reX, reY);
@@ -289,7 +289,7 @@ static NSString* const kCLDrawToolEraserIconName = @"eraserIconAssetsName";
     
     [_drawingView.image drawAtPoint:CGPointZero];
     
-    CGFloat strokeWidth = 10;//MAX(1, _widthSlider.value * 65);
+    CGFloat strokeWidth = 2;//MAX(1, _widthSlider.value * 65);
     UIColor *strokeColor = self.drawColor;//_strokePreview.backgroundColor;
     
     CGContextSetLineWidth(context, strokeWidth);
