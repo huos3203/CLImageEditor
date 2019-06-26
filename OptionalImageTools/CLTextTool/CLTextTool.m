@@ -597,7 +597,20 @@ const CGFloat MAX_FONT_SIZE = 17.0;
     if(sender.state == UIGestureRecognizerStateBegan){
         _initialPoint = self.center;
     }
-    self.center = CGPointMake(_initialPoint.x + p.x, _initialPoint.y + p.y);
+    CGPoint centerPoint = CGPointMake(_initialPoint.x + p.x, _initialPoint.y + p.y);
+    if (centerPoint.x < 0) {
+        centerPoint.x = 0;
+    }
+    if (centerPoint.x > CGRectGetWidth(self.superview.frame)) {
+        centerPoint.x = CGRectGetWidth(self.superview.frame);
+    }
+    if (centerPoint.y < 0) {
+        centerPoint.y = 0;
+    }
+    if (centerPoint.y > CGRectGetHeight(self.superview.frame)) {
+        centerPoint.y = CGRectGetHeight(self.superview.frame);
+    }
+    self.center = centerPoint;
 }
 
 - (void)circleViewDidPan:(UIPanGestureRecognizer*)sender
