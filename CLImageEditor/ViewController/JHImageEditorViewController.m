@@ -366,7 +366,8 @@ static const CGFloat kMenuBarHeight = 60.0f;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+    CGPoint offset = self.menuView.contentOffset;
+    self.menuView.contentOffset = CGPointMake(offset.x - 5, offset.y);
     if(self.targetImageView){
         [self expropriateImageView];
     }
@@ -544,7 +545,7 @@ static const CGFloat kMenuBarHeight = 60.0f;
 -(UIBarButtonItem *)confirmBtn
 {
     if(!_confirmBtn){
-        _confirmBtn = [[UIBarButtonItem alloc] initWithTitle:@"上传" style:UIBarButtonItemStyleDone target:self action:@selector(pushedFinishBtn:)];
+        _confirmBtn = [[UIBarButtonItem alloc] initWithTitle:@"上传 " style:UIBarButtonItemStyleDone target:self action:@selector(pushedFinishBtn:)];
         _confirmBtn.tintColor = [UIColor whiteColor];
     }
     return _confirmBtn;
@@ -553,7 +554,7 @@ static const CGFloat kMenuBarHeight = 60.0f;
 -(UIBarButtonItem *)cancelBtn
 {
     if(!_cancelBtn){
-        _cancelBtn = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleDone target:self action:@selector(pushedCloseBtn:)];
+        _cancelBtn = [[UIBarButtonItem alloc] initWithTitle:@" 取消" style:UIBarButtonItemStyleDone target:self action:@selector(pushedCloseBtn:)];
         _cancelBtn.tintColor = [UIColor whiteColor];
     }
     return _cancelBtn;
