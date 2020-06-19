@@ -96,6 +96,18 @@
     int scale = [UIScreen mainScreen].scale;
     NSString *path = [NSString stringWithFormat:@"CLImageEditor.bundle/JH/%@@%dx.png",name,scale];
     UIImage *img = [UIImage imageNamed:path];
+    if (!img) {
+        img = [self imageForPodName:name];
+    }
+    return img;
+}
+
+- (UIImage*)imageForPodName:(NSString*)name
+{
+    int scale = [UIScreen mainScreen].scale;
+    NSString *bundlePath = [[NSBundle bundleForClass:[self class]] pathForResource:@"CLImageEditor" ofType:@"bundle"];
+    NSString *imagePath = [bundlePath stringByAppendingFormat:@"/JH/%@@%dx.png",name,scale];
+    UIImage *img = [UIImage fastImageWithContentsOfFile:imagePath];
     return img;
 }
 @end

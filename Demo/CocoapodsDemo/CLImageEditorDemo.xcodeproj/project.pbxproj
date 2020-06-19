@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		13DE1F0CAAEE8D8747630514 /* Pods_CLImageEditorDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FBCF5CFDCE711C17FDC8256 /* Pods_CLImageEditorDemo.framework */; };
 		AD5C1E0418350DC400790989 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD5C1E0318350DC400790989 /* Foundation.framework */; };
 		AD5C1E0618350DC400790989 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD5C1E0518350DC400790989 /* CoreGraphics.framework */; };
 		AD5C1E0818350DC400790989 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD5C1E0718350DC400790989 /* UIKit.framework */; };
@@ -19,12 +20,13 @@
 		AD5C1E8A18350F1800790989 /* default.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AD5C1E8918350F1800790989 /* default.jpg */; };
 		AD85D68718457388003106A3 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD85D68618457388003106A3 /* Accelerate.framework */; };
 		AD85D68918457394003106A3 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD85D68818457394003106A3 /* CoreImage.framework */; };
-		CB715D064D7B46BEB36E2F1A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 131D1ADE730948FDBF5013AB /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		131D1ADE730948FDBF5013AB /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		20C161E9EC874323BFF69B83 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		4FBCF5CFDCE711C17FDC8256 /* Pods_CLImageEditorDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CLImageEditorDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		823C152ABFD6012DB1D0B6E7 /* Pods-CLImageEditorDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CLImageEditorDemo.release.xcconfig"; path = "Target Support Files/Pods-CLImageEditorDemo/Pods-CLImageEditorDemo.release.xcconfig"; sourceTree = "<group>"; };
+		95312417B4CCB707E4DBA99B /* Pods-CLImageEditorDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CLImageEditorDemo.debug.xcconfig"; path = "Target Support Files/Pods-CLImageEditorDemo/Pods-CLImageEditorDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		AD13E67C1850F7C8009B12AD /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		AD5C1E0018350DC400790989 /* CLImageEditorDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CLImageEditorDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD5C1E0318350DC400790989 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -56,13 +58,23 @@
 				AD5C1E0618350DC400790989 /* CoreGraphics.framework in Frameworks */,
 				AD5C1E0818350DC400790989 /* UIKit.framework in Frameworks */,
 				AD5C1E0418350DC400790989 /* Foundation.framework in Frameworks */,
-				CB715D064D7B46BEB36E2F1A /* libPods.a in Frameworks */,
+				13DE1F0CAAEE8D8747630514 /* Pods_CLImageEditorDemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		807E441C40A7EC906C81D2DC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				95312417B4CCB707E4DBA99B /* Pods-CLImageEditorDemo.debug.xcconfig */,
+				823C152ABFD6012DB1D0B6E7 /* Pods-CLImageEditorDemo.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		AD5C1DF718350DC400790989 = {
 			isa = PBXGroup;
 			children = (
@@ -70,6 +82,7 @@
 				AD5C1E0218350DC400790989 /* Frameworks */,
 				AD5C1E0118350DC400790989 /* Products */,
 				20C161E9EC874323BFF69B83 /* Pods.xcconfig */,
+				807E441C40A7EC906C81D2DC /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -90,7 +103,7 @@
 				AD5C1E0518350DC400790989 /* CoreGraphics.framework */,
 				AD5C1E0718350DC400790989 /* UIKit.framework */,
 				AD5C1E2218350DC400790989 /* XCTest.framework */,
-				131D1ADE730948FDBF5013AB /* libPods.a */,
+				4FBCF5CFDCE711C17FDC8256 /* Pods_CLImageEditorDemo.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -128,11 +141,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AD5C1E3218350DC500790989 /* Build configuration list for PBXNativeTarget "CLImageEditorDemo" */;
 			buildPhases = (
+				6F401A581E62416C6121A8EA /* [CP] Check Pods Manifest.lock */,
 				AED3F9B4286B459493E6DF40 /* Check Pods Manifest.lock */,
 				AD5C1DFC18350DC400790989 /* Sources */,
 				AD5C1DFD18350DC400790989 /* Frameworks */,
 				AD5C1DFE18350DC400790989 /* Resources */,
-				C26CE378EBDC4B47BB64EC42 /* Copy Pods Resources */,
+				8E31CA9840DB43B9E6C6C046 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -157,6 +171,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 				ja,
@@ -186,6 +201,46 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		6F401A581E62416C6121A8EA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CLImageEditorDemo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8E31CA9840DB43B9E6C6C046 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CLImageEditorDemo/Pods-CLImageEditorDemo-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CLImageEditor/CLImageEditor.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CLImageEditor.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CLImageEditorDemo/Pods-CLImageEditorDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		AED3F9B4286B459493E6DF40 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -199,21 +254,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		C26CE378EBDC4B47BB64EC42 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -324,6 +364,7 @@
 		};
 		AD5C1E3318350DC500790989 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 95312417B4CCB707E4DBA99B /* Pods-CLImageEditorDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -338,7 +379,7 @@
 		};
 		AD5C1E3418350DC500790989 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 20C161E9EC874323BFF69B83 /* Pods.xcconfig */;
+			baseConfigurationReference = 823C152ABFD6012DB1D0B6E7 /* Pods-CLImageEditorDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
