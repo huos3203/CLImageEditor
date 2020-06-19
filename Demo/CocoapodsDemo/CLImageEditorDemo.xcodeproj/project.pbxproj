@@ -20,6 +20,7 @@
 		AD5C1E8A18350F1800790989 /* default.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AD5C1E8918350F1800790989 /* default.jpg */; };
 		AD85D68718457388003106A3 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD85D68618457388003106A3 /* Accelerate.framework */; };
 		AD85D68918457394003106A3 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD85D68818457394003106A3 /* CoreImage.framework */; };
+		F9D8B933249C90FF006155D0 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9D8B932249C90FF006155D0 /* Launch Screen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		AD5C1E8918350F1800790989 /* default.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = default.jpg; sourceTree = "<group>"; };
 		AD85D68618457388003106A3 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		AD85D68818457394003106A3 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		F9D8B932249C90FF006155D0 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,7 +73,6 @@
 				95312417B4CCB707E4DBA99B /* Pods-CLImageEditorDemo.debug.xcconfig */,
 				823C152ABFD6012DB1D0B6E7 /* Pods-CLImageEditorDemo.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -119,6 +120,7 @@
 				AD5C1E1518350DC400790989 /* Main.storyboard */,
 				AD5C1E1818350DC400790989 /* ViewController.h */,
 				AD5C1E1918350DC400790989 /* ViewController.m */,
+				F9D8B932249C90FF006155D0 /* Launch Screen.storyboard */,
 			);
 			path = CLImageEditorDemo;
 			sourceTree = "<group>";
@@ -194,6 +196,7 @@
 				AD5C1E1C18350DC400790989 /* Images.xcassets in Resources */,
 				AD5C1E0E18350DC400790989 /* InfoPlist.strings in Resources */,
 				AD5C1E1718350DC400790989 /* Main.storyboard in Resources */,
+				F9D8B933249C90FF006155D0 /* Launch Screen.storyboard in Resources */,
 				AD5C1E8A18350F1800790989 /* default.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -371,7 +374,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CLImageEditorDemo/CLImageEditorDemo-Prefix.pch";
 				INFOPLIST_FILE = "CLImageEditorDemo/CLImageEditorDemo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -386,7 +389,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CLImageEditorDemo/CLImageEditorDemo-Prefix.pch";
 				INFOPLIST_FILE = "CLImageEditorDemo/CLImageEditorDemo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

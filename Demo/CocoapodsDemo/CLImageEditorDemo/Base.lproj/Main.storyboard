@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="vXZ-lx-hvc">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vXZ-lx-hvc">
+    <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment version="4864" identifier="iOS"/>
+        <deployment version="4640" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -12,19 +12,16 @@
             <objects>
                 <viewController id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="xRc-U2-iit"/>
-                        <viewControllerLayoutGuide type="bottom" id="BrZ-cE-JNh"/>
+                        <viewControllerLayoutGuide type="top" id="U7n-zb-j5R"/>
+                        <viewControllerLayoutGuide type="bottom" id="2ed-Oh-yCC"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CB0-lu-14t">
-                                <rect key="frame" x="0.0" y="813" width="414" height="83"/>
+                            <tabBar contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CB0-lu-14t">
+                                <rect key="frame" x="0.0" y="729" width="375" height="83"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="83" id="N37-Ke-fLE"/>
-                                </constraints>
                                 <items>
                                     <tabBarItem title="New" image="new" id="TFK-MD-4i6"/>
                                     <tabBarItem tag="1" title="Edit" image="edit" id="J0F-q1-dck"/>
@@ -34,21 +31,8 @@
                                     <outlet property="delegate" destination="vXZ-lx-hvc" id="2lu-G8-dQC"/>
                                 </connections>
                             </tabBar>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M1c-Oo-4PQ">
-                                <rect key="frame" x="0.0" y="65" width="414" height="728"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Aid-Jz-pIY">
-                                        <rect key="frame" x="0.0" y="57" width="406" height="816"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="default.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="t6V-Mw-Tix">
-                                                <rect key="frame" x="0.0" y="0.0" width="406" height="668"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            </imageView>
-                                        </subviews>
-                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </view>
-                                </subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M1c-Oo-4PQ">
+                                <rect key="frame" x="0.0" y="44" width="375" height="685"/>
                                 <inset key="insetFor6xAndEarlier" minX="0.0" minY="20" maxX="0.0" maxY="0.0"/>
                                 <connections>
                                     <outlet property="delegate" destination="vXZ-lx-hvc" id="c4e-Pl-dV3"/>
@@ -57,24 +41,25 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="M1c-Oo-4PQ" firstAttribute="top" secondItem="xRc-U2-iit" secondAttribute="bottom" constant="60" id="B6f-nS-g29"/>
-                            <constraint firstItem="CB0-lu-14t" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="QBe-1J-awO"/>
-                            <constraint firstAttribute="bottom" secondItem="CB0-lu-14t" secondAttribute="bottom" id="Y7g-Lg-gft"/>
-                            <constraint firstAttribute="trailing" secondItem="CB0-lu-14t" secondAttribute="trailing" id="gIg-MG-897"/>
+                            <constraint firstItem="M1c-Oo-4PQ" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="F6E-ia-32e"/>
+                            <constraint firstItem="CB0-lu-14t" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="Kw9-73-LR3"/>
+                            <constraint firstItem="CB0-lu-14t" firstAttribute="top" secondItem="M1c-Oo-4PQ" secondAttribute="bottom" id="TJP-Oc-wLP"/>
+                            <constraint firstItem="U7n-zb-j5R" firstAttribute="bottom" secondItem="M1c-Oo-4PQ" secondAttribute="top" id="WCn-F7-Cqr"/>
+                            <constraint firstAttribute="trailing" secondItem="CB0-lu-14t" secondAttribute="trailing" id="b7A-b0-bk5"/>
+                            <constraint firstAttribute="bottom" secondItem="CB0-lu-14t" secondAttribute="bottom" id="gzK-KA-FAB"/>
+                            <constraint firstAttribute="trailing" secondItem="M1c-Oo-4PQ" secondAttribute="trailing" id="ze2-j0-yhy"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="_imageView" destination="t6V-Mw-Tix" id="9NB-Kv-cOV"/>
                         <outlet property="_scrollView" destination="M1c-Oo-4PQ" id="uWV-DK-fwD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="131.8840579710145" y="138.61607142857142"/>
+            <point key="canvasLocation" x="41.600000000000001" y="26.086956521739133"/>
         </scene>
     </scenes>
     <resources>
-        <image name="default.jpg" width="1280" height="2000"/>
         <image name="edit" width="30" height="30"/>
         <image name="new" width="30" height="30"/>
         <image name="save" width="30" height="30"/>
