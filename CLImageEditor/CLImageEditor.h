@@ -24,6 +24,10 @@
 - (id)initWithImage:(UIImage*)image;
 - (id)initWithImage:(UIImage*)image delegate:(id<CLImageEditorDelegate>)delegate;
 - (id)initWithDelegate:(id<CLImageEditorDelegate>)delegate;
+#pragma mark - 金和
+- (id)initWithJHImage:(UIImage*)image;
+- (id)initWithJHImage:(UIImage*)image delegate:(id<CLImageEditorDelegate>)delegate;
+- (id)initWithJHDelegate:(id<CLImageEditorDelegate>)delegate;
 
 - (void)showInViewController:(UIViewController<CLImageEditorTransitionDelegate>*)controller withImageView:(UIImageView*)imageView;
 

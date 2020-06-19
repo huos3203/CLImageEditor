@@ -46,6 +46,9 @@
     
     NSArray *list = [CLClassList subclassesOfClass:toolClass];
     for(Class subtool in list){
+        NSString *cls = NSStringFromClass(subtool);
+        if(![cls isEqualToString:@"CLDrawTool"]
+           && ![cls isEqualToString:@"CLTextTool"]) continue;
         info = [CLImageToolInfo toolInfoForToolClass:subtool];
         if(info){
             [array addObject:info];

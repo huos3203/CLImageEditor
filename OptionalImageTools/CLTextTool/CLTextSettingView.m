@@ -12,6 +12,7 @@
 #import "CLColorPickerView.h"
 #import "CLFontPickerView.h"
 #import "CLCircleView.h"
+#import "CLImageToolBase.h"
 
 @interface CLTextSettingView()
 <CLColorPickerViewDelegate, CLFontPickerViewDelegate, UITextViewDelegate>
@@ -91,10 +92,22 @@
     _scrollView.scrollEnabled = NO;
     [self addSubview:_scrollView];
     
-    _textView = [[UITextView alloc] initWithFrame:CGRectMake(10, 0, self.width-42, 80)];
+    _textView = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, self.width-60, 35)];
     _textView.delegate = self;
+    _textView.layer.borderColor = [UIColor colorWithRed:233/255.0 green:233/255.0 blue:233/255.0 alpha:1.0].CGColor;
+    _textView.layer.cornerRadius = 2;
+    _textView.layer.borderWidth = 1;
+    _textView.font = [UIFont systemFontOfSize:14];
     _textView.backgroundColor = [UIColor clearColor];
     [_scrollView addSubview:_textView];
+    UIButton *clearBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 16, 16)];
+    CGFloat cx = _textView.frame.origin.x + _textView.bounds.size.width - 13;
+    CGFloat cy = _textView.center.y - 3;
+    clearBtn.center = CGPointMake(cx, cy);
+    
+    [clearBtn setImage:[[CLImageToolBase new] imageForJHName:@"textviewdel"] forState:UIControlStateNormal];
+    [clearBtn addTarget:self action:@selector(cleanTextView) forControlEvents:UIControlEventTouchUpInside];
+    [_scrollView addSubview:clearBtn];
     
     _colorPanel = [[UIView alloc] initWithFrame:CGRectMake(self.width, 0, self.width, self.height)];
     _colorPanel.backgroundColor = [UIColor clearColor];
@@ -230,34 +243,20 @@
 
 - (void)keyBoardWillShow:(NSNotification *)notificatioin
 {
-    [self keyBoardWillChange:notificatioin withTextViewHeight:80];
+    [self keyBoardWillChange:notificatioin withTextViewHeight:30];
     [_textView scrollRangeToVisible:_textView.selectedRange];
 }
 
 - (void)keyBoardWillHide:(NSNotification *)notificatioin
 {
-    [self keyBoardWillChange:notificatioin withTextViewHeight:self.height - 20];
+    [self keyBoardWillChange:notificatioin withTextViewHeight:30];
 }
 
 - (void)keyBoardWillChange:(NSNotification *)notificatioin withTextViewHeight:(CGFloat)height
 {
     CGRect keyboardFrame = [[notificatioin.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     keyboardFrame = [self.superview convertRect:keyboardFrame fromView:self.window];
-    
-    UIViewAnimationCurve animationCurve = [[notificatioin.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] integerValue];
-    double duration = [[notificatioin.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-    
-    [UIView animateWithDuration:duration
-                          delay:0
-                        options:UIViewAnimationOptionBeginFromCurrentState | (animationCurve<<16)
-                     animations:^{
-                         self->_textView.height = height;
-                         CGFloat dy = MIN(0, (keyboardFrame.origin.y - self->_textView.height) - self.top);
-                         self.transform = CGAffineTransformMakeTranslation(0, dy);
-                     } completion:^(BOOL finished) {
-                         
-                     }
-     ];
+    self.top = keyboardFrame.origin.y - self->_textView.height - 14;
 }
 
 #pragma mark- Color picker delegate
@@ -314,4 +313,13 @@
     }
 }
 
+
+#pragma mark - 清除文本
+-(void)cleanTextView
+{
+    _textView.text = @"";
+    if([self.delegate respondsToSelector:@selector(textSettingView:didChangeText:)]){
+        [self.delegate textSettingView:self didChangeText:@""];
+    }
+}
 @end

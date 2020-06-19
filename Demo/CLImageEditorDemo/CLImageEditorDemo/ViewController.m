@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 
-#import "CLImageEditor.h"
+#import "CLImageEditorSDK.h"
 
 @interface ViewController ()
 <CLImageEditorDelegate, CLImageEditorTransitionDelegate, CLImageEditorThemeDelegate>
@@ -73,21 +73,28 @@
 - (void)pushedEditBtn
 {
     if(_imageView.image){
-        CLImageEditor *editor = [[CLImageEditor alloc] initWithImage:_imageView.image delegate:self];
+        CLImageEditor *editor = [[CLImageEditor alloc] initWithJHImage:_imageView.image delegate:self];
+        ///设置皮肤主题
+        editor.theme.bundleName = @"CLImageEditor";  //资源bundle名
+        editor.theme.backgroundColor = [UIColor blackColor];
+        editor.theme.statusBarHidden = YES;
+        editor.theme.toolbarColor = [UIColor blackColor];
+        editor.theme.toolIconColor = @"white";
+        editor.theme.toolbarTextColor = [UIColor whiteColor];
         //CLImageEditor *editor = [[CLImageEditor alloc] initWithDelegate:self];
         
         /**/
         NSLog(@"%@", editor.toolInfo);
         NSLog(@"%@", editor.toolInfo.toolTreeDescription);
         CLImageToolInfo *tool0 = [editor.toolInfo subToolInfoWithToolName:@"CLDrawTool" recursive:NO];
-        tool0.title = @"划重点";
+        tool0.title = @"涂鸦";
         tool0.available = YES;//如果available设置为no，则从菜单视图中删除。
         tool0.dockedNumber = -1;//置于顶层
         CLImageToolInfo *tool01 = [editor.toolInfo subToolInfoWithToolName:@"CLTextTool" recursive:NO];
-        tool01.title = @"加备注";
+        tool01.title = @"文字";
         tool01.available = YES;//如果available设置为no，则从菜单视图中删除。
         tool01.dockedNumber = -1;//置于顶层
-        [self removeOtherBut:editor];
+//        [self removeOtherBut:editor];
         
         [self presentViewController:editor animated:YES completion:nil];
         //[editor showInViewController:self withImageView:_imageView];
@@ -100,6 +107,14 @@
 
 -(void)removeOtherBut:(CLImageEditor *)editor
 {
+    /**两种方式屏蔽
+     第一种:在CLImageToolInfo+Private.m中添加如下代码
+     ```
+     if(![cls isEqualToString:@"CLDrawTool"]
+     && ![cls isEqualToString:@"CLTextTool"]) continue;
+     ```
+     第二种: 如下实现,获取工具实例,然后设置available为NO
+     */
     CLImageToolInfo *tool = [editor.toolInfo subToolInfoWithToolName:@"CLToneCurveTool" recursive:NO];
     tool.available = NO;
     

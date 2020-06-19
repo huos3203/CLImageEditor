@@ -6,8 +6,14 @@
 //
 
 #import "CLDrawTool.h"
+#import "JHColorBoardView.h"
 
 static NSString* const kCLDrawToolEraserIconName = @"eraserIconAssetsName";
+
+@interface CLDrawTool()
+@property (strong, nonatomic) UIColor *drawColor;
+@end
+
 
 @implementation CLDrawTool
 {
@@ -23,6 +29,12 @@ static NSString* const kCLDrawToolEraserIconName = @"eraserIconAssetsName";
     UIImageView *_eraserIcon;
     
     CLToolbarMenuItem *_colorBtn;
+    
+    NSMutableArray *_currentImages;
+    NSMutableArray *_overImages;
+    
+    UIButton *_undo;
+    UIButton *_redo;
 }
 
 + (NSArray*)subtools
@@ -86,6 +98,9 @@ static NSString* const kCLDrawToolEraserIconName = @"eraserIconAssetsName";
                          self->_menuView.transform = CGAffineTransformIdentity;
                      }];
     
+    _currentImages = [NSMutableArray new];
+    _overImages = [NSMutableArray new];
+
 }
 
 - (void)cleanup
@@ -93,7 +108,8 @@ static NSString* const kCLDrawToolEraserIconName = @"eraserIconAssetsName";
     [_drawingView removeFromSuperview];
     self.editor.imageView.userInteractionEnabled = NO;
     self.editor.scrollView.panGestureRecognizer.minimumNumberOfTouches = 1;
-    
+    [_redo removeFromSuperview];
+    [_undo removeFromSuperview];
     [UIView animateWithDuration:kCLImageToolAnimationDuration
                      animations:^{
                          self->_menuView.transform = CGAffineTransformMakeTranslation(0, self.editor.view.height-self->_menuView.top);
@@ -118,179 +134,30 @@ static NSString* const kCLDrawToolEraserIconName = @"eraserIconAssetsName";
 }
 
 #pragma mark-
-
-- (UISlider*)defaultSliderWithWidth:(CGFloat)width
+-(void)setMenu
 {
-    UISlider *slider = [[UISlider alloc] initWithFrame:CGRectMake(0, 0, width, 34)];
+    __weak typeof(self) weakSelf = self;
+    JHColorBoardView *board = [[JHColorBoardView alloc] initWithFrame:_menuView.bounds for:JHImage_Draw colorHandler:^(UIColor *color) {
+        weakSelf.drawColor = color;
+    }];
+    [_menuView addSubview:board];
     
-    [slider setMaximumTrackImage:[UIImage new] forState:UIControlStateNormal];
-    [slider setMinimumTrackImage:[UIImage new] forState:UIControlStateNormal];
-    [slider setThumbImage:[UIImage new] forState:UIControlStateNormal];
-    slider.thumbTintColor = [UIColor whiteColor];
-    
-    return slider;
-}
-
-- (UIImage*)colorSliderBackground
-{
-    CGSize size = _colorSlider.frame.size;
-    
-    UIGraphicsBeginImageContextWithOptions(size, NO, 0.0);
-    
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    CGRect frame = CGRectMake(5, (size.height-10)/2, size.width-10, 5);
-    CGPathRef path = [UIBezierPath bezierPathWithRoundedRect:frame cornerRadius:5].CGPath;
-    CGContextAddPath(context, path);
-    CGContextClip(context);
-    
-    CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
-    CGFloat components[] = {
-        0.0f, 0.0f, 0.0f, 1.0f,
-        1.0f, 1.0f, 1.0f, 1.0f,
-        1.0f, 0.0f, 0.0f, 1.0f,
-        1.0f, 1.0f, 0.0f, 1.0f,
-        0.0f, 1.0f, 0.0f, 1.0f,
-        0.0f, 1.0f, 1.0f, 1.0f,
-        0.0f, 0.0f, 1.0f, 1.0f
-    };
-    
-    size_t count = sizeof(components)/ (sizeof(CGFloat)* 4);
-    CGFloat locations[] = {0.0f, 0.9/3.0, 1/3.0, 1.5/3.0, 2/3.0, 2.5/3.0, 1.0};
-    
-    CGPoint startPoint = CGPointMake(5, 0);
-    CGPoint endPoint = CGPointMake(size.width-5, 0);
-    
-    CGGradientRef gradientRef = CGGradientCreateWithColorComponents(colorSpaceRef, components, locations, count);
-    
-    CGContextDrawLinearGradient(context, gradientRef, startPoint, endPoint, kCGGradientDrawsAfterEndLocation);
-    
-    UIImage *tmp = UIGraphicsGetImageFromCurrentImageContext();
-    
-    CGGradientRelease(gradientRef);
-    CGColorSpaceRelease(colorSpaceRef);
-    
-    UIGraphicsEndImageContext();
-    
-    return tmp;
-}
-
-- (UIImage*)widthSliderBackground
-{
-    CGSize size = _widthSlider.frame.size;
-    
-    UIGraphicsBeginImageContextWithOptions(size, NO, 0.0);
-    
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    UIColor *color = [[[CLImageEditorTheme theme] toolbarTextColor] colorWithAlphaComponent:0.5];
-    
-    CGFloat strRadius = 1;
-    CGFloat endRadius = size.height/2 * 0.6;
-    
-    CGPoint strPoint = CGPointMake(strRadius + 5, size.height/2 - 2);
-    CGPoint endPoint = CGPointMake(size.width-endRadius - 1, strPoint.y);
-    
-    CGMutablePathRef path = CGPathCreateMutable();
-    CGPathAddArc(path, NULL, strPoint.x, strPoint.y, strRadius, -M_PI/2, M_PI-M_PI/2, YES);
-    CGPathAddLineToPoint(path, NULL, endPoint.x, endPoint.y + endRadius);
-    CGPathAddArc(path, NULL, endPoint.x, endPoint.y, endRadius, M_PI/2, M_PI+M_PI/2, YES);
-    CGPathAddLineToPoint(path, NULL, strPoint.x, strPoint.y - strRadius);
-    
-    CGPathCloseSubpath(path);
-    
-    CGContextAddPath(context, path);
-    CGContextSetFillColorWithColor(context, color.CGColor);
-    CGContextFillPath(context);
-    
-    UIImage *tmp = UIGraphicsGetImageFromCurrentImageContext();
-    
-    CGPathRelease(path);
-    
-    UIGraphicsEndImageContext();
-    
-    return tmp;
-}
-
-- (UIColor*)colorForValue:(CGFloat)value
-{
-    if(value<1/3.0){
-        return [UIColor colorWithWhite:value/0.3 alpha:1];
-    }
-    return [UIColor colorWithHue:((value-1/3.0)/0.7)*2/3.0 saturation:1 brightness:1 alpha:1];
-}
-
-- (void)setMenu
-{
-    CGFloat W = 70;
-    
-    _colorSlider = [self defaultSliderWithWidth:_menuView.width - W - 20];
-    _colorSlider.left = 10;
-    _colorSlider.top  = 5;
-    [_colorSlider addTarget:self action:@selector(colorSliderDidChange:) forControlEvents:UIControlEventValueChanged];
-    _colorSlider.backgroundColor = [UIColor colorWithPatternImage:[self colorSliderBackground]];
-    _colorSlider.value = 0;
-    [_menuView addSubview:_colorSlider];
-    
-    _widthSlider = [self defaultSliderWithWidth:_colorSlider.width];
-    _widthSlider.left = 10;
-    _widthSlider.top = _colorSlider.bottom + 5;
-    [_widthSlider addTarget:self action:@selector(widthSliderDidChange:) forControlEvents:UIControlEventValueChanged];
-    _widthSlider.value = 0.1;
-    _widthSlider.backgroundColor = [UIColor colorWithPatternImage:[self widthSliderBackground]];
-    [_menuView addSubview:_widthSlider];
-    
-    _strokePreview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, W - 5, W - 5)];
-    _strokePreview.layer.cornerRadius = _strokePreview.height/2;
-    _strokePreview.layer.borderWidth = 1;
-    _strokePreview.layer.borderColor = [[[CLImageEditorTheme theme] toolbarTextColor] CGColor];
-    _strokePreview.center = CGPointMake(_menuView.width-W/2, _menuView.height/2);
-    [_menuView addSubview:_strokePreview];
-    
-    _strokePreviewBackground = [[UIView alloc] initWithFrame:_strokePreview.frame];
-    _strokePreviewBackground.layer.cornerRadius = _strokePreviewBackground.height/2;
-    _strokePreviewBackground.alpha = 0.3;
-    [_strokePreviewBackground addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(strokePreviewDidTap:)]];
-    [_menuView insertSubview:_strokePreviewBackground aboveSubview:_strokePreview];
-    
-    _eraserIcon = [[UIImageView alloc] initWithFrame:_strokePreview.frame];
-    _eraserIcon.image  =  [self imageForKey:kCLDrawToolEraserIconName defaultImageName:@"btn_eraser.png"];
-    _eraserIcon.hidden = YES;
-    [_menuView addSubview:_eraserIcon];
-    
-    [self colorSliderDidChange:_colorSlider];
-    [self widthSliderDidChange:_widthSlider];
-    
-    _menuView.clipsToBounds = NO;
-}
-
-- (void)colorSliderDidChange:(UISlider*)sender
-{
-    if(_eraserIcon.hidden){
-        _strokePreview.backgroundColor = [self colorForValue:_colorSlider.value];
-        _strokePreviewBackground.backgroundColor = _strokePreview.backgroundColor;
-        _colorSlider.thumbTintColor = _strokePreview.backgroundColor;
-    }
-}
-
-- (void)widthSliderDidChange:(UISlider*)sender
-{
-    CGFloat scale = MAX(0.05, _widthSlider.value);
-    _strokePreview.transform = CGAffineTransformMakeScale(scale, scale);
-    _strokePreview.layer.borderWidth = 2/scale;
-}
-
-- (void)strokePreviewDidTap:(UITapGestureRecognizer*)sender
-{
-    _eraserIcon.hidden = !_eraserIcon.hidden;
-    
-    if(_eraserIcon.hidden){
-        [self colorSliderDidChange:_colorSlider];
-    }
-    else{
-        _strokePreview.backgroundColor = [[CLImageEditorTheme theme] toolbarTextColor];
-        _strokePreviewBackground.backgroundColor = _strokePreview.backgroundColor;
-    }
+    _undo = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 22)];
+    _redo = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 22)];
+    _undo.selected = YES;
+    _redo.selected = YES;
+    [_undo setImage:[self imageForJHName:@"undoPre"] forState:UIControlStateNormal];
+    [_undo setImage:[self imageForJHName:@"undoPre2"] forState:UIControlStateSelected];
+    [_redo setImage:[self imageForJHName:@"redoPre"] forState:UIControlStateNormal];
+    [_redo setImage:[self imageForJHName:@"redoPre2"] forState:UIControlStateSelected];
+    CGFloat reX = [UIScreen mainScreen].bounds.size.width - 16;
+    CGFloat reY = _menuView.frame.origin.y - 40;
+    _redo.center = CGPointMake(reX, reY);
+    _undo.center = CGPointMake(reX - 50, reY);
+    [_undo addTarget:self action:@selector(unPreDoAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_redo addTarget:self action:@selector(rePreDoAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.editor.view addSubview:_undo];
+    [self.editor.view addSubview:_redo];
 }
 
 - (void)drawingViewDidPan:(UIPanGestureRecognizer*)sender
@@ -303,6 +170,12 @@ static NSString* const kCLDrawToolEraserIconName = @"eraserIconAssetsName";
     
     if(sender.state != UIGestureRecognizerStateEnded){
         [self drawLine:_prevDraggingPosition to:currentDraggingPosition];
+        //存储一条线的数组 即:线上的所有点
+        _undo.selected = NO;
+        
+    }
+    if (sender.state == UIGestureRecognizerStateEnded) {
+        [_currentImages addObject:_drawingView.image];
     }
     _prevDraggingPosition = currentDraggingPosition;
 }
@@ -316,16 +189,15 @@ static NSString* const kCLDrawToolEraserIconName = @"eraserIconAssetsName";
     
     [_drawingView.image drawAtPoint:CGPointZero];
     
-    CGFloat strokeWidth = MAX(1, _widthSlider.value * 65);
-    UIColor *strokeColor = _strokePreview.backgroundColor;
+    CGFloat strokeWidth = 2;//MAX(1, _widthSlider.value * 65);
+    UIColor *strokeColor = self.drawColor;//_strokePreview.backgroundColor;
     
     CGContextSetLineWidth(context, strokeWidth);
     CGContextSetStrokeColorWithColor(context, strokeColor.CGColor);
     CGContextSetLineCap(context, kCGLineCapRound);
-    
-    if(!_eraserIcon.hidden){
-        CGContextSetBlendMode(context, kCGBlendModeClear);
-    }
+//    if(!_eraserIcon.hidden){
+//        CGContextSetBlendMode(context, kCGBlendModeClear);
+//    }
     
     CGContextMoveToPoint(context, from.x, from.y);
     CGContextAddLineToPoint(context, to.x, to.y);
@@ -350,4 +222,57 @@ static NSString* const kCLDrawToolEraserIconName = @"eraserIconAssetsName";
     return tmp;
 }
 
+
+
+#pragma mark - 撤销上一步操作
+//撤销
+-(void)unPreDoAction:(UIButton *)undo
+{
+    if(_currentImages.count == 0)return;
+    NSArray *unline = [_currentImages lastObject];
+    [_overImages addObject:unline];
+    [_currentImages removeLastObject];
+    _drawingView.image = [_currentImages lastObject];
+    [_undo setHighlighted:YES];
+    _redo.selected = _overImages.count == 0;
+    _undo.selected = _currentImages.count == 0;
+}
+
+//重做
+-(void)rePreDoAction:(UIButton *)redo
+{
+    if(_overImages.count == 0)return;
+    NSArray *reline = [_overImages lastObject];
+    [_currentImages addObject:reline];
+    [_overImages removeLastObject];
+    _drawingView.image = [_currentImages lastObject];
+    _redo.selected = _overImages.count == 0;
+    _undo.selected = _currentImages.count == 0;
+
+}
+
+-(void)clearLine:(CGPoint)from to:(CGPoint)to
+{
+    CGSize size = _drawingView.frame.size;
+    UIGraphicsBeginImageContextWithOptions(size, NO, 0.0);
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    [_drawingView.image drawAtPoint:CGPointZero];
+    
+    CGFloat strokeWidth = 2;//MAX(1, _widthSlider.value * 65);
+    UIColor *strokeColor = self.drawColor;//_strokePreview.backgroundColor;
+    
+    CGContextSetLineWidth(context, strokeWidth);
+    CGContextSetStrokeColorWithColor(context, strokeColor.CGColor);
+    CGContextSetBlendMode(context, kCGBlendModeClear);
+    
+    CGContextMoveToPoint(context, from.x, from.y);
+    CGContextAddLineToPoint(context, to.x, to.y);
+    CGContextStrokePath(context);
+    
+    _drawingView.image = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+}
 @end
