@@ -220,7 +220,7 @@
 		AD7B1DB919546130007C3BBC /* CLDrawTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLDrawTool.m; sourceTree = "<group>"; };
 		AD85D68618457388003106A3 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		AD85D68818457394003106A3 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
-		F926259F254435F80064D1CA /* CLImageEditor.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; name = CLImageEditor.podspec; path = ../../CLImageEditor.podspec; sourceTree = "<group>"; };
+		F926259F254435F80064D1CA /* CLImageEditor.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; name = CLImageEditor.podspec; path = ../../CLImageEditor.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
